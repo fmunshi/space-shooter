@@ -15,14 +15,15 @@ var Laser = function (rect, rotation, velocity, shipRect) {
 	var vY = 20*Math.sin(rotation) + velocity[1];
 	this.velocity = [vX, vY];
 
-	if (vX < 0) this.rect.center = [shipRect.right+20,shipRect.bottom+40];
-	else this.rect.center = [shipRect.right+50,shipRect.bottom+30];
+	if (vX < 0) this.rect.center = [shipRect.right-100,shipRect.bottom-50];
+	else this.rect.center = [shipRect.right-50,shipRect.bottom-30];
+
+
+
+  	this.rect.width = this.image.rect.width;
+  	this.rect.height = this.image.rect.height;
 
 	this.size = rect;
-
-	this.rect.width = 50;
-	this.rect.height = 100;
-
 
 	return this;
 };
@@ -33,9 +34,11 @@ Laser.prototype.update = function (msDuration){
 	this.checkbounds();
 	this.increaseSize();
 	this.rect.moveIp(this.velocity);
-	this.rect.width = 50;
-	this.rect.height = 100;
 	this.collide();
+
+
+  	this.rect.width = this.image.rect.width;
+  	this.rect.height = this.image.rect.height;
 
 };
 

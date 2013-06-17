@@ -22,9 +22,6 @@ var Ship = function(rect) {
   this.weapon = 'rocket';
 
   this.rect = new gamejs.Rect(rect);
-  this.rect.x = 500;
-  this.rect.y = 500;
-
   this.bullets = new gamejs.sprite.Group();
 
   this.health = 1000;
@@ -71,17 +68,17 @@ Ship.prototype.draw = function (display){
 
 //MOVING STUFF
 Ship.prototype.move = function(event){
-  if (event.key == $e.K_s) this.velocity[1] += 10;
-  else if (event.key == $e.K_a) this.velocity[0] -= 10;
-  else if (event.key == $e.K_d) this.velocity[0] += 10;
-  else if (event.key == $e.K_w) this.velocity[1] -= 10;
+  if (event.key == $e.K_s) this.velocity[1] += 5;
+  else if (event.key == $e.K_a) this.velocity[0] -= 5;
+  else if (event.key == $e.K_d) this.velocity[0] += 5;
+  else if (event.key == $e.K_w) this.velocity[1] -= 5;
 };
 
 Ship.prototype.decelerate = function(){
-  if (this.velocity[0] > 0) { this.velocity[0] -= this.velocity[0]/15; }
-  if (this.velocity[0] < 0) { this.velocity[0] -= this.velocity[0]/15; }
-  if (this.velocity[1] > 0) { this.velocity[1] -= this.velocity[1]/15; }
-  if (this.velocity[1] < 0) { this.velocity[1] -= this.velocity[1]/15; }
+  if (this.velocity[0] > 0) { this.velocity[0] -= this.velocity[0]/30; }
+  if (this.velocity[0] < 0) { this.velocity[0] -= this.velocity[0]/30; }
+  if (this.velocity[1] > 0) { this.velocity[1] -= this.velocity[1]/30; }
+  if (this.velocity[1] < 0) { this.velocity[1] -= this.velocity[1]/30; }
 };
 
 Ship.prototype.checkbounds = function(){
@@ -119,6 +116,9 @@ Ship.prototype.calculateAngle = function (event){
   this.rotation = $m.radians(angle);
   this.image = gamejs.transform.rotate(this.originalImage, angle+90);
 
+  this.rect.width = this.image.rect.width;
+  this.rect.height = this.image.rect.height;
+
 };
 
 // SHOOTING ROCKETS
@@ -154,8 +154,8 @@ Ship.prototype.switchWeapon = function(){
 };
 
 Ship.prototype.collide = function (){
-  var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, false);
-  if (collide.length > 0) this.health -= 20;
+  var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
+  if (collide.length > 0) this.health -= 50;
 }
 
 exports.Ship = Ship;

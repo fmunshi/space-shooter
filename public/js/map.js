@@ -26,6 +26,7 @@ var Star = exports.Star =  function() {
 };
 gamejs.utils.objects.extend(Star, gamejs.sprite.Sprite);
 
+
 Star.prototype.update = function (){
 	this.rect.moveIp(this.velocity);
 };
