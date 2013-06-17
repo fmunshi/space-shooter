@@ -27,6 +27,9 @@ var Ship = function(rect) {
 
   this.bullets = new gamejs.sprite.Group();
 
+  this.health = 1000;
+  this.maxHealth = 1000;
+
   return this;
 };
 gamejs.utils.objects.extend(Ship, gamejs.sprite.Sprite);
@@ -34,6 +37,7 @@ gamejs.utils.objects.extend(Ship, gamejs.sprite.Sprite);
 
 Ship.prototype.update = function(msDuration) {
   this.bullets.update(msDuration);
+  this.collide();
   this.decelerate();
   this.checkbounds();
   this.rect.moveIp(this.velocity);
@@ -139,7 +143,7 @@ Ship.prototype.loadRocket = function (){
 
 Ship.prototype.shootLasers = function (event){
   var that = this;
-  var laser = new $laser([20, 50], that.rotation, that.velocity, that.rect);
+  var laser = new $laser([50, 10], that.rotation, that.velocity, that.rect);
   laser.ship = this;
   this.bullets.add(laser);
 };
@@ -148,5 +152,10 @@ Ship.prototype.switchWeapon = function(){
   if (this.weapon === 'rocket') this.weapon = 'laser';
   else this.weapon = 'rocket';
 };
+
+Ship.prototype.collide = function (){
+  var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, false);
+  if (collide.length > 0) this.health -= 20;
+}
 
 exports.Ship = Ship;

@@ -8,8 +8,8 @@ var Star = exports.Star =  function() {
   this.size = Math.random()*20;
   this.angle = Math.random()*360;
 
-  if (Math.random() < 0.5) this.speedY = (Math.random()*2);
-  else this.speedY = -(Math.random()*2);
+  if (Math.random() < 0.5) this.speedY = 0;
+  else this.speedY = 0;
 
   this.speedX = -(Math.random()*5 + 5);
 
@@ -48,3 +48,8 @@ var drawStars = exports.drawStars = function (display){
 	});
 
 };
+
+var drawHealth = exports.drawHealth = function(display){
+    var length = window.innerWidth*2*($g.ship.health/$g.ship.maxHealth)
+         gamejs.draw.rect(display, '#33ee33', new gamejs.Rect([$g.xMax * .05, 10], [$g.xMax * .9, 20]), length);
+}
