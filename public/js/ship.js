@@ -1,15 +1,15 @@
 var gamejs = require('gamejs');
 var $g = require('globals');
 var $e = require('gamejs/event');
-var $v = require('gamejs/utils/vectors');
 var $m = require('gamejs/utils/math');
-var $rocket = require('rocket').Rocket;
+var $rocket = require('bullets/rocket').Rocket;
+var $laser = require('bullets/laser').Laser;
 
 var Ship = function(rect) {
   // call superconstructor
   Ship.superConstructor.apply(this, arguments);
   this.image = gamejs.image.load("./images/ship.png");
-  this.originalImage = gamejs.transform.scale(this.image, [80, 80] );
+  this.originalImage = gamejs.transform.scale(this.image, rect);
   this.image = gamejs.transform.rotate(this.originalImage, 90);
   
   // [x,y]
@@ -19,22 +19,21 @@ var Ship = function(rect) {
   //Angle in radians
   this.rotation = 0;
   this.shooting = false;
+  this.weapon = 'rocket';
 
   this.rect = new gamejs.Rect(rect);
   this.rect.x = 500;
   this.rect.y = 500;
 
-  this.rockets = new gamejs.sprite.Group();
+  this.bullets = new gamejs.sprite.Group();
 
   return this;
 };
 gamejs.utils.objects.extend(Ship, gamejs.sprite.Sprite);
 
 
-
-
 Ship.prototype.update = function(msDuration) {
-  this.rockets.update(msDuration);
+  this.bullets.update(msDuration);
   this.decelerate();
   this.checkbounds();
   this.rect.moveIp(this.velocity);
@@ -47,18 +46,24 @@ Ship.prototype.handle = function(event){
   }
   if (event.type === $e.MOUSE_DOWN){
     this.calculateAngle(event);
-    this.shootRockets(event);
+    if (this.weapon === 'rocket') this.shootRockets(event);
+    else this.shootLasers(event);
   }
   if (event.type === $e.KEY_DOWN) {
+    if (event.key === $e.K_SHIFT){
+      this.switchWeapon();
+    }
     this.move(event);
   }
 };
 
 Ship.prototype.draw = function (display){
   display.blit(this.image, this.rect);
-  this.rockets.draw(display);
+  this.bullets.draw(display);
 
 };
+
+
 
 //MOVING STUFF
 Ship.prototype.move = function(event){
@@ -115,24 +120,33 @@ Ship.prototype.calculateAngle = function (event){
 // SHOOTING ROCKETS
 Ship.prototype.shootRockets = function (event){
   var that = this;
-  if (this.shooting){
-    console.log('Loading bullet');
-  }
-  else {
-      var rocket = new $rocket([25, 60], $m.degrees(this.rotation)+90);
-      var vX = 10*Math.cos(this.rotation);
-      var vY = 10*Math.sin(this.rotation);
-      rocket.velocity = [vX, vY];
-      if (vX < 0) var position = [this.rect.right+20,this.rect.bottom+40];
-      else var position = [this.rect.right+50,this.rect.bottom+30];
-      rocket.rect.center = position;
-      this.rockets.add(rocket);
+  if (!this.shooting) {
+      var rocket = new $rocket([20, 50], that.rotation, that.velocity, that.rect);
+      rocket.ship = this;
+      this.bullets.add(rocket);
       this.shooting = true;
-      var loadRocket = setTimeout(function(){ 
+      this.loadRocket();
+  }
+};
+
+Ship.prototype.loadRocket = function (){
+  var that = this;
+    var loadRocket = setTimeout(function(){ 
         that.shooting = false;
         clearTimeout(loadRocket);
-      }, 500);
-  }
+    }, 500);
+};
+
+Ship.prototype.shootLasers = function (event){
+  var that = this;
+  var laser = new $laser([20, 50], that.rotation, that.velocity, that.rect);
+  laser.ship = this;
+  this.bullets.add(laser);
+};
+
+Ship.prototype.switchWeapon = function(){
+  if (this.weapon === 'rocket') this.weapon = 'laser';
+  else this.weapon = 'rocket';
 };
 
 exports.Ship = Ship;

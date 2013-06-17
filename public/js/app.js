@@ -6,6 +6,7 @@ var $map = require("map");
 
 gamejs.preload(["./images/ship.png"]);
 gamejs.preload(["./images/rocket.png"]);
+gamejs.preload(["./images/laser.png"]);
 gamejs.preload(["./images/background.jpg"]);
 gamejs.preload(["./images/star.png"]);
 
@@ -14,7 +15,7 @@ gamejs.ready(function() {
     var display = gamejs.display.setMode($g.game.screenSize);
     var ship = new $ship([80, 80]);
     setTimeout(function(){
-        for (var i = 0; i < 50; i++){
+        for (var i = 0; i < 20; i++){
             var star = new $map.Star();
             $g.stars.push(star);        
         }

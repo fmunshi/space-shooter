@@ -5,10 +5,13 @@ var gamejs = require('gamejs');
 var Star = exports.Star =  function() {
   // call superconstructor
   Star.superConstructor.apply(this, arguments);
-  this.size = Math.random()*25;
+  this.size = Math.random()*20;
   this.angle = Math.random()*360;
+
+  if (Math.random() < 0.5) this.speedY = (Math.random()*2);
+  else this.speedY = -(Math.random()*2);
+
   this.speedX = -(Math.random()*5 + 5);
-  this.speedY = -(Math.random()*5);
 
   this.image = gamejs.image.load("./images/star.png");
   this.originalImage = gamejs.transform.scale(this.image, [this.size, this.size] );
@@ -28,7 +31,6 @@ Star.prototype.update = function (){
 };
 
 Star.prototype.checkbounds = function(){
-	console.log('checsdsadsk bounds');
   	var that = this;
     var pos = this.rect.center;
     if ( (pos[0] < - 150) || (pos[0] > $g.game.screenSize[0] + 100) || (pos[1] < -100) || (pos[1] > $g.game.screenSize[1] + 100) )  { 
@@ -41,7 +43,6 @@ var drawStars = exports.drawStars = function (display){
 
 	stars.forEach(function(star){
 		star.checkbounds();
-		console.log('check bounds');
 		star.draw(display);
 		star.update(display);
 	});
