@@ -2,6 +2,7 @@ var $g = require('globals');
 var $ship = require('ship').Ship;
 var gamejs = require('gamejs');
 
+
 var Star = exports.Star =  function() {
   // call superconstructor
   Star.superConstructor.apply(this, arguments);

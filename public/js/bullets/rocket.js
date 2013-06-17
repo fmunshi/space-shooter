@@ -13,14 +13,14 @@ var Rocket = function(rect, rotation, velocity, shipRect) {
   var vY = 20*Math.sin(rotation);
   this.velocity = [vX, vY];
 
-  if (vX < 0) this.rect.center = [shipRect.right+20,shipRect.bottom+40];
-  else this.rect.center = [shipRect.right+50,shipRect.bottom+30];
+  if (vX < 0) this.rect.center = shipRect;
+  else this.rect.center = shipRect;
   this.rect.center = shipRect;
 
-  
+
   this.rect.width = this.image.rect.width;
   this.rect.height = this.image.rect.height;
-  
+
   return this;
 };
 gamejs.utils.objects.extend(Rocket, $bullet);

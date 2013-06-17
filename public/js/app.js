@@ -12,7 +12,9 @@ gamejs.preload(["./images/background.jpg"]);
 gamejs.preload(["./images/star.png"]);
 gamejs.preload(["./images/comet.png"]);
 
+
 gamejs.ready(function() {
+
 
     var display = gamejs.display.setMode($g.game.screenSize);
     var ship = $g.ship = new $ship([80, 80]);
