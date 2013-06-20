@@ -20,7 +20,8 @@ gamejs.utils.objects.extend(Bullet, gamejs.sprite.Sprite);
 
 Bullet.prototype.update = function(msDuration) {
   this.checkbounds();
-  this.rect.moveIp(this.velocity);
+  var velocity = $g.calcVelocity(msDuration, this.velocity);
+  this.rect.moveIp(velocity);
   this.collide();
 };
 

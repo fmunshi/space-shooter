@@ -28,8 +28,9 @@ var Star = exports.Star =  function() {
 gamejs.utils.objects.extend(Star, gamejs.sprite.Sprite);
 
 
-Star.prototype.update = function (){
-	this.rect.moveIp(this.velocity);
+Star.prototype.update = function (msDuration){
+  var velocity = $g.calcVelocity(msDuration, this.velocity);
+	this.rect.moveIp(velocity);
 };
 
 Star.prototype.checkbounds = function(){
@@ -40,18 +41,18 @@ Star.prototype.checkbounds = function(){
     }
 };
 
-var drawStars = exports.drawStars = function (display){
+var drawStars = exports.drawStars = function (display, msDuration){
 	var stars = $g.stars;
 
 	stars.forEach(function(star){
 		star.checkbounds();
 		star.draw(display);
-		star.update(display);
+		star.update(msDuration);
 	});
 
 };
 
 var drawHealth = exports.drawHealth = function(display){
     var length = window.innerWidth*2*($g.ship.health/$g.ship.maxHealth)
-         gamejs.draw.rect(display, '#33ee33', new gamejs.Rect([$g.xMax * .05, 10], [$g.xMax * .9, 20]), length);
+         gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.xMax * .05, 10], [$g.xMax * .9, 20]), length);
 }

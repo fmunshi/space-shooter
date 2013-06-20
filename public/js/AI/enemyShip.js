@@ -2,13 +2,13 @@ var gamejs = require('gamejs');
 var $g = require('globals');
 var $e = require('gamejs/event');
 var $m = require('gamejs/utils/math');
-var $rocket = require('bullets/rocket').Rocket;
-var $laser = require('bullets/laser').Laser;
+var $laser = require('AI/enemyLaser').Laser;
+var $ship = require('ship').Ship;
 
-var Ship = function(rect) {
+var eShip = function(rect) {
   // call superconstructor
-  Ship.superConstructor.apply(this, arguments);
-  this.image = gamejs.image.load("./images/ship.png");
+  eShip.superConstructor.apply(this, arguments);
+  this.image = gamejs.image.load("./images/eShip.png");
   this.originalImage = gamejs.transform.scale(this.image, rect);
   this.image = gamejs.transform.rotate(this.originalImage, 90);
   
@@ -19,48 +19,30 @@ var Ship = function(rect) {
   //Angle in radians
   this.rotation = 0;
   this.shooting = false;
-  this.weapon = 'rocket';
 
   this.rect = new gamejs.Rect(rect);
   this.bullets = new gamejs.sprite.Group();
 
-  this.health = 1000;
-  this.maxHealth = 1000;
+  this.health = 100;
+  this.maxHealth = 100;
 
   return this;
 };
-gamejs.utils.objects.extend(Ship, gamejs.sprite.Sprite);
+gamejs.utils.objects.extend(eShip, $ship);
 
 
-Ship.prototype.update = function(msDuration) {
+eShip.prototype.update = function(msDuration) {
   this.bullets.update(msDuration);
   this.collide();
+  this.decelerate();
   this.checkbounds();
-
   var velocity = $g.calcVelocity(msDuration, this.velocity);
   this.rect.moveIp(velocity);
-  this.decelerate(velocity);
 };
 
-Ship.prototype.handle = function(event){
+eShip.prototype.handle = function(event){ };
 
-  if (event.type === $e.MOUSE_MOTION) {
-      this.calculateAngle(event);
-  }
-  if (event.type === $e.MOUSE_DOWN){
-    this.calculateAngle(event);
-    if (this.weapon === 'rocket') this.shootRockets(event);
-    else this.shootLasers(event);
-  }
-  if (event.type === $e.KEY_DOWN) {
-    if (event.key === $e.K_SHIFT){
-      this.switchWeapon();
-    }
-    this.move(event);
-  }
-};
-
-Ship.prototype.draw = function (display){
+eShip.prototype.draw = function (display){
   display.blit(this.image, this.rect);
   this.bullets.draw(display);
 
@@ -69,21 +51,21 @@ Ship.prototype.draw = function (display){
 
 
 //MOVING STUFF
-Ship.prototype.move = function(event){
+eShip.prototype.move = function(event){
   if (event.key == $e.K_s) this.velocity[1] += 5;
   else if (event.key == $e.K_a) this.velocity[0] -= 5;
   else if (event.key == $e.K_d) this.velocity[0] += 5;
   else if (event.key == $e.K_w) this.velocity[1] -= 5;
 };
 
-Ship.prototype.decelerate = function(velocity){
-  if (this.velocity[0] > 0) { this.velocity[0] -= this.velocity[0]/10; }
-  if (this.velocity[0] < 0) { this.velocity[0] -= this.velocity[0]/10; }
-  if (this.velocity[1] > 0) { this.velocity[1] -= this.velocity[1]/10; }
-  if (this.velocity[1] < 0) { this.velocity[1] -= this.velocity[1]/10; }
+eShip.prototype.decelerate = function(){
+  if (this.velocity[0] > 0) { this.velocity[0] -= this.velocity[0]/30; }
+  if (this.velocity[0] < 0) { this.velocity[0] -= this.velocity[0]/30; }
+  if (this.velocity[1] > 0) { this.velocity[1] -= this.velocity[1]/30; }
+  if (this.velocity[1] < 0) { this.velocity[1] -= this.velocity[1]/30; }
 };
 
-Ship.prototype.checkbounds = function(){
+eShip.prototype.checkbounds = function(){
   this.pos = this.rect.center;
 
     // Left
@@ -99,7 +81,7 @@ Ship.prototype.checkbounds = function(){
 
 
 //ANGLE STUFF
-Ship.prototype.calculateAngle = function (event){
+eShip.prototype.calculateAngle = function (event){
   var mX = event.pos[0] - 30,
       mY = event.pos[1] - 30,
       sX = this.pos[0],
@@ -124,18 +106,18 @@ Ship.prototype.calculateAngle = function (event){
 };
 
 // SHOOTING ROCKETS
-Ship.prototype.shootRockets = function (event){
+eShip.prototype.shootRockets = function (event){
   var that = this;
   if (!this.shooting) {
       var rocket = new $rocket([20, 50], that.rotation, that.velocity, that.rect);
-      rocket.ship = this;
+      rocket.eShip = this;
       this.bullets.add(rocket);
       this.shooting = true;
       this.loadRocket();
   }
 };
 
-Ship.prototype.loadRocket = function (){
+eShip.prototype.loadRocket = function (){
   var that = this;
     var loadRocket = setTimeout(function(){ 
         that.shooting = false;
@@ -143,21 +125,21 @@ Ship.prototype.loadRocket = function (){
     }, 500);
 };
 
-Ship.prototype.shootLasers = function (event){
+eShip.prototype.shootLasers = function (event){
   var that = this;
-  var laser = new $laser([50, 5], that.rotation, that.velocity, that.rect);
-  laser.ship = this;
+  var laser = new $laser([50, 10], that.rotation, that.velocity, that.rect);
+  laser.eShip = this;
   this.bullets.add(laser);
 };
 
-Ship.prototype.switchWeapon = function(){
+eShip.prototype.switchWeapon = function(){
   if (this.weapon === 'rocket') this.weapon = 'laser';
   else this.weapon = 'rocket';
 };
 
-Ship.prototype.collide = function (){
+eShip.prototype.collide = function (){
   var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
   if (collide.length > 0) this.health -= 50;
 }
 
-exports.Ship = Ship;
+exports.eShip = eShip;

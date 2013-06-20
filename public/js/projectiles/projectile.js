@@ -18,8 +18,9 @@ var Projectile =  function() {
 };
 gamejs.utils.objects.extend(Projectile, gamejs.sprite.Sprite);
 
-Projectile.prototype.update = function (){
-  this.rect.moveIp(this.velocity);
+Projectile.prototype.update = function (msDuration){
+  var velocity = $g.calcVelocity(msDuration, this.velocity);
+  this.rect.moveIp(velocity);
   this.checkbounds();
   this.rect.width = this.size+30;
   this.rect.height = this.size+30;
