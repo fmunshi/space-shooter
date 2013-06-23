@@ -11,8 +11,8 @@ var Laser = function (rect, rotation, velocity, shipRect) {
 	this.image = gamejs.transform.rotate(this.originalImage, $m.degrees(rotation));
 	this.rotation = rotation;
 
-	var vX = 20*Math.cos(rotation) + velocity[0];
-	var vY = 20*Math.sin(rotation) + velocity[1];
+	var vX = 50*Math.cos(rotation) + velocity[0];
+	var vY = 50*Math.sin(rotation) + velocity[1];
 	this.velocity = [vX, vY];
 
 	if (vX < 0) this.rect.center = [shipRect.right-100,shipRect.bottom-50];

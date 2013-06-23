@@ -21,13 +21,13 @@ gamejs.ready(function() {
     var display = gamejs.display.setMode($g.game.screenSize);
     var ship = $g.ship = new $ship([80, 80]);
     setTimeout(function() {
-        for (var i = 0; i < 20; i++){
+        for (var i = 0; i < 10; i++){
             var star = new $map.Star();
             $g.stars.push(star);
         }
     }, 500);
     for (var i = 0; i < 5; i++){
-            var size = Math.random()*50 + 30;
+            var size = Math.random()*20 + 10;
             var comet = new $comet([size,size]);
             $g.projectiles.add(comet);
     }

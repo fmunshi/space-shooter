@@ -53,6 +53,8 @@ var drawStars = exports.drawStars = function (display, msDuration){
 };
 
 var drawHealth = exports.drawHealth = function(display){
-    var length = window.innerWidth*2*($g.ship.health/$g.ship.maxHealth)
-         gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.xMax * .05, 10], [$g.xMax * .9, 20]), length);
+    var health = window.innerWidth*2*($g.ship.health/$g.ship.maxHealth);
+    var heat = window.innerWidth*2*($g.ship.heat/$g.ship.maxHeat);
+         gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.xMax * .05, 10], [$g.xMax * .9, 20]), health);
+         gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.xMax * .05, 40], [$g.xMax * .9, 20]), heat);
 }
