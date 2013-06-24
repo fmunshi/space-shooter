@@ -28,8 +28,11 @@ var eShip = function(rect) {
   this.health = 100;
   this.maxHealth = 100;
 
-  this.aimRate = 200;
-  this.fireRate = 100;
+  this.maxAimRate = 1000;
+  this.aimRate = this.maxAimRate;
+
+  this.maxFireRate = Math.random()*1000 + 500;
+  this.fireRate = this.maxFireRate;
 
   return this;
 };
@@ -41,7 +44,7 @@ eShip.prototype.update = function(msDuration) {
   this.collide();
   this.decelerate();
   this.checkbounds();
-  if (this.aimRate < 0) this.aimRate = 200;
+  if (this.aimRate < 0) this.aimRate = this.maxAimRate;
   else {
     this.aimRate -= msDuration;
     this.calculateAngle($g.ship);
@@ -49,7 +52,7 @@ eShip.prototype.update = function(msDuration) {
 
   if (this.fireRate > 0) this.fireRate -= msDuration;
   else {
-    this.fireRate = 1000;
+    this.fireRate = this.maxFireRate;
     this.shootLasers();
   }
 
