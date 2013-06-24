@@ -20,7 +20,7 @@ var Ship = function(rect) {
   this.rotation = 0;
   this.shooting = false;
   this.firing = false;
-  this.fireRate = 100;
+  this.fireRate = 200;
   this.weapon = 'rocket';
   this.weapons = ['rocket', 'laser'];
 
@@ -165,7 +165,7 @@ Ship.prototype.shootLasers = function (msDuration){
       var laser = new $laser([50, 5], that.rotation, that.velocity, that.rect);
       laser.ship = this;
       this.bullets.add(laser);
-      this.fireRate = 1;
+      this.fireRate = 75;
   }
   else this.fireRate -= msDuration;
 
@@ -180,10 +180,22 @@ Ship.prototype.switchWeapon = function(){
 Ship.prototype.collide = function (){
   var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
   if (collide.length > 0){
-    this.health -= 50;
+    this.damage(50);
     this.velocity[0] = this.velocity[0]/10;
     this.velocity[1] = this.velocity[1]/10;
   } 
+}
+
+Ship.prototype.kill = function(){
+    alert('You died');
+      setTimeout(function(){
+        location.reload();
+    }, 500);
+}
+
+Ship.prototype.damage = function(amount){
+  this.health -= amount;
+  if (this.health < 0) this.kill();
 }
 
 exports.Ship = Ship;

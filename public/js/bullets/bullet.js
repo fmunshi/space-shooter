@@ -35,7 +35,9 @@ Bullet.prototype.checkbounds = function(){
 
 Bullet.prototype.collide = function (){
   var collided = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
+  var eCollided = gamejs.sprite.spriteCollide(this, $g.eShips, true);
   if (collided.length > 0) this.kill();
+  if (eCollided.length > 0) this.kill();
 }
 
 Bullet.prototype.kill = function(){

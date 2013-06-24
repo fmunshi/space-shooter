@@ -2,6 +2,7 @@ var gamejs = require("gamejs");
 var $e = require("gamejs/event")
 var $g = require("globals");
 var $ship = require("ship").Ship;
+var $eShip = require("AI/enemyShip").eShip;
 var $map = require("map");
 var $comet = require("projectiles/comet").Comet;
 
@@ -26,11 +27,20 @@ gamejs.ready(function() {
             $g.stars.push(star);
         }
     }, 500);
+    setTimeout(function() {
     for (var i = 0; i < 5; i++){
             var size = Math.random()*20 + 10;
             var comet = new $comet([size,size]);
             $g.projectiles.add(comet);
     }
+    }, 1000);
+    setTimeout(function() {
+        for (var i = 0; i < 5; i++){
+            var eShip = new $eShip([80,80]);
+            $g.eShips.add(eShip);
+        }
+    }, 1000);
+
 
     gamejs.onEvent(function(event) {
         ship.handle(event);
@@ -43,6 +53,8 @@ gamejs.ready(function() {
 
         $g.projectiles.update(msDuration);
         $g.projectiles.draw(display);
+        $g.eShips.update(msDuration);
+        $g.eShips.draw(display);
 
         $map.drawStars(display, msDuration);
         $map.drawHealth(display);
