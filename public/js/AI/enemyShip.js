@@ -28,11 +28,13 @@ var eShip = function(rect) {
   this.health = 100;
   this.maxHealth = 100;
 
-  this.maxAimRate = 1000;
-  this.aimRate = this.maxAimRate;
+  // this.accuracy = 20;
+  this.accuracy = 0;
 
   this.maxFireRate = Math.random()*1000 + 500;
+  // this.maxFireRate = 1;
   this.fireRate = this.maxFireRate;
+  this.dead = -1;
 
   return this;
 };
@@ -40,24 +42,26 @@ gamejs.utils.objects.extend(eShip, $ship);
 
 
 eShip.prototype.update = function(msDuration) {
-  this.bullets.update(msDuration);
-  this.collide();
-  this.decelerate();
-  this.checkbounds();
-  if (this.aimRate < 0) this.aimRate = this.maxAimRate;
-  else {
-    this.aimRate -= msDuration;
+
+  if (this.dead < 0) {
+    this.collide();
+    this.checkbounds();
     this.calculateAngle($g.ship);
-  }
 
-  if (this.fireRate > 0) this.fireRate -= msDuration;
+    if (this.fireRate > 0) this.fireRate -= msDuration;
+    else {
+      this.fireRate = this.maxFireRate;
+      this.shootLasers();
+    }
+    var velocity = $g.calcVelocity(msDuration, this.velocity);
+    this.rect.moveIp(velocity);
+  }
   else {
-    this.fireRate = this.maxFireRate;
-    this.shootLasers();
+    this.dead -= msDuration;
+    if (this.dead < 0) this.velocity = [-(Math.random()*5 + 2), 0];
   }
-
-  var velocity = $g.calcVelocity(msDuration, this.velocity);
-  this.rect.moveIp(velocity);
+  this.bullets.update(msDuration);
+  
 };
 
 eShip.prototype.draw = function (display){
@@ -74,8 +78,11 @@ eShip.prototype.checkbounds = function(){
 };
 
 eShip.prototype.kill = function () {
-  this.velocity = [-(Math.random()*5 + 2), 0];
-  this.rect.center = this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
+  this.dead = 1000;
+  this.rect.center = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
+  this.velocity = [0,0];
+
+  
 }
 
 //ANGLE STUFF
@@ -94,7 +101,7 @@ eShip.prototype.calculateAngle = function (ship){
   if ((dX < 0) && (dY > 0)) angle += 180;
   // QUAD TWO
   else if ((dX < 0) && (dY < 0)) angle -= 180;
-
+  
   this.rotation = $m.radians(angle);
   this.image = gamejs.transform.rotate(this.originalImage, angle+90);
 
@@ -106,7 +113,10 @@ eShip.prototype.calculateAngle = function (ship){
 
 eShip.prototype.shootLasers = function (){
   var that = this;
-  var laser = new $laser([50, 10], that.rotation, that.velocity, that.rect);
+  var angle = $m.degrees(that.rotation);
+  angle -= Math.random()*this.accuracy - this.accuracy/2;
+  angle = $m.radians(angle);
+  var laser = new $laser([40, 5], angle, that.velocity, that.rect);
   laser.ship = this;
   this.bullets.add(laser);
 };

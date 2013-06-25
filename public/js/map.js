@@ -42,6 +42,8 @@ Star.prototype.checkbounds = function(){
 };
 
 var drawStars = exports.drawStars = function (display, msDuration){
+  var font = new gamejs.font.Font('20px monospace', '#AA0000');
+  display.blit(font.render('FPS' + Math.floor(1000/msDuration)), [10,30]);
 	var stars = $g.stars;
 
 	stars.forEach(function(star){
@@ -53,8 +55,7 @@ var drawStars = exports.drawStars = function (display, msDuration){
 };
 
 var drawHealth = exports.drawHealth = function(display){
-    var health = window.innerWidth*2*($g.ship.health/$g.ship.maxHealth);
-    var heat = window.innerWidth*2*($g.ship.heat/$g.ship.maxHeat);
-         gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.xMax * .05, 10], [$g.xMax * .9, 20]), health);
-         gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.xMax * .05, 40], [$g.xMax * .9, 20]), heat);
+        gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.ship.rect.left, $g.ship.rect.top-5], [$g.ship.health / $g.ship.maxHealth * $g.ship.originalImage.getSize()[0], 2]), 0);
+        gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.ship.rect.left, $g.ship.rect.top+5], [$g.ship.heat / $g.ship.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
+
 }

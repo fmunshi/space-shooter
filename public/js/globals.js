@@ -16,7 +16,15 @@ exports.eShips = new gamejs.sprite.Group();
 
 exports.calcVelocity = function (msDuration, velocity){
   var newVelocity = [];
-  newVelocity[0] = velocity[0]*msDuration/15;
-  newVelocity[1] = velocity[1]*msDuration/15;
+  var fps = 1000/msDuration;
+	newVelocity[0] = velocity[0]*75/fps;
+	newVelocity[1] = velocity[1]*75/fps;
+
   return newVelocity;
 }
+
+exports.level = function() {
+
+};
+
+exports.time = 0;

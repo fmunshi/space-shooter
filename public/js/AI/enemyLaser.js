@@ -30,7 +30,6 @@ gamejs.utils.objects.extend(eLaser, $bullet);
 
 eLaser.prototype.update = function (msDuration){
 	this.checkbounds();
-	this.increaseSize();
 	var velocity = $g.calcVelocity(msDuration, this.velocity);
 	this.rect.moveIp(velocity);
 	this.collide();
@@ -40,15 +39,6 @@ eLaser.prototype.update = function (msDuration){
   	this.rect.height = this.image.rect.height;
 
 };
-
-eLaser.prototype.increaseSize = function(){
-	this.size[0] += 5;
-
-	this.image = gamejs.image.load("./images/eLaser.png");
- 	this.originalImage = gamejs.transform.scale(this.image, this.size);
- 	this.image = gamejs.transform.rotate(this.originalImage, $m.degrees(this.rotation));
-};
-
 
 eLaser.prototype.collide = function (){
   var collided = gamejs.sprite.spriteCollide(this, $g.projectiles, true);

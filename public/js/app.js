@@ -1,5 +1,6 @@
 var gamejs = require("gamejs");
-var $e = require("gamejs/event")
+var $e = require("gamejs/event");
+var $t = require("gamejs/time");
 var $g = require("globals");
 var $ship = require("ship").Ship;
 var $eShip = require("AI/enemyShip").eShip;
@@ -18,7 +19,6 @@ gamejs.preload(["./images/eShip.png"]);
 
 gamejs.ready(function() {
 
-
     var display = gamejs.display.setMode($g.game.screenSize);
     var ship = $g.ship = new $ship([80, 80]);
     setTimeout(function() {
@@ -27,15 +27,17 @@ gamejs.ready(function() {
             $g.stars.push(star);
         }
     }, 500);
-    setTimeout(function() {
-    for (var i = 0; i < 5; i++){
-            var size = Math.random()*20 + 10;
-            var comet = new $comet([size,size]);
-            $g.projectiles.add(comet);
-    }
-    }, 1000);
+
     setTimeout(function() {
         for (var i = 0; i < 5; i++){
+                var size = Math.random()*10 + 10;
+                var comet = new $comet([size,size]);
+                $g.projectiles.add(comet);
+        }
+    }, 1000);
+    
+    setTimeout(function() {
+        for (var i = 0; i < 3; i++){
             var eShip = new $eShip([80,80]);
             $g.eShips.add(eShip);
         }
@@ -47,7 +49,7 @@ gamejs.ready(function() {
     });
 
     gamejs.onTick(function(msDuration) {
-        display.fill("#1F1010");
+        display.fill("#10101F");
         ship.update(msDuration);
         ship.draw(display);
 
@@ -59,4 +61,5 @@ gamejs.ready(function() {
         $map.drawStars(display, msDuration);
         $map.drawHealth(display);
    });
+
 });
