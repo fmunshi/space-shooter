@@ -55,7 +55,6 @@ var drawStars = exports.drawStars = function (display, msDuration){
 };
 
 var drawHealth = exports.drawHealth = function(display){
-        gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.ship.rect.left, $g.ship.rect.top-5], [$g.ship.health / $g.ship.maxHealth * $g.ship.originalImage.getSize()[0], 2]), 0);
-        gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.ship.rect.left, $g.ship.rect.top+5], [$g.ship.heat / $g.ship.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
-
+  gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-50], [$g.ship.health / $g.ship.maxHealth * $g.ship.originalImage.getSize()[0], 2]), 0);
+  gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-40], [$g.ship.heat / $g.ship.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
 }

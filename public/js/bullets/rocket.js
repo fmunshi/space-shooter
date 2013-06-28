@@ -3,7 +3,7 @@ var $m = require('gamejs/utils/math');
 var $bullet = require('bullets/bullet').Bullet;
 var $g = require('globals')
 
-var Rocket = function(rect, rotation, velocity, shipRect) {
+var Rocket = function(rect, rotation, velocity, pos) {
   // call superconstructor
   Rocket.superConstructor.apply(this, arguments);
   this.image = gamejs.image.load("./images/rocket.png");
@@ -14,9 +14,7 @@ var Rocket = function(rect, rotation, velocity, shipRect) {
   var vY = 20*Math.sin(rotation);
   this.velocity = [vX, vY];
 
-  if (vX < 0) this.rect.center = shipRect;
-  else this.rect.center = shipRect;
-  this.rect.center = shipRect;
+  this.rect.center = pos;
   this.ship;
 
   this.rect.width = this.image.rect.width;

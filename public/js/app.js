@@ -21,11 +21,13 @@ gamejs.ready(function() {
 
     var display = gamejs.display.setMode($g.game.screenSize);
     var ship = $g.ship = new $ship([80, 80]);
+
     setTimeout(function() {
         for (var i = 0; i < 10; i++){
             var star = new $map.Star();
             $g.stars.push(star);
         }
+        ship.calculateAngle([0,0]);
     }, 500);
 
     setTimeout(function() {

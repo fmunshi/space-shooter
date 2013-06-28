@@ -3,7 +3,7 @@ var $m = require('gamejs/utils/math');
 var $bullet = require('bullets/bullet').Bullet;
 var $g = require('globals');
 
-var Laser = function (rect, rotation, velocity, shipRect) {
+var Laser = function (rect, rotation, velocity, pos) {
 	// call superconstructor
 	Laser.superConstructor.apply(this, arguments);
 	this.image = gamejs.image.load("./images/laser.png");
@@ -15,12 +15,11 @@ var Laser = function (rect, rotation, velocity, shipRect) {
 	var vY = 50*Math.sin(rotation) + velocity[1];
 	this.velocity = [vX, vY];
 
-	if (vX < 0) this.rect.center = [shipRect.right-100,shipRect.bottom-50];
-	else this.rect.center = [shipRect.right-50,shipRect.bottom-30];
+	this.rect.center = [pos[0], pos[1]];
 
 
-  	this.rect.width = this.image.rect.width;
-  	this.rect.height = this.image.rect.height;
+	this.rect.width = this.image.rect.width;
+	this.rect.height = this.image.rect.height;
 
 	this.size = rect;
 
