@@ -8,13 +8,12 @@ var $ship  = require('ship').Ship;
 var eShip = function(rect) {
   // call superconstructor
   eShip.superConstructor.apply(this, arguments);
-  this.image = gamejs.image.load("./images/eShip.png");
+  this.image = gamejs.image.load("./images/Enemies/boss.png");
   this.originalImage = gamejs.transform.scale(this.image, rect);
   this.image = gamejs.transform.rotate(this.originalImage, 90);
   
   // [x,y]
   this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
-  this.velocity = [-(Math.random()*10) + 1, 0];
 
   this.rect = new gamejs.Rect(rect);
   this.rect.center = this.pos;
@@ -25,8 +24,11 @@ var eShip = function(rect) {
     maxHealth   :   200,
     maxFireRate :   Math.random()*1000 + 500,
     accuracy    :   0,
-    luck        :   0
+    luck        :   0,
+    damage      :   10
   };
+
+  this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
 
   this.health = this.stats.maxHealth;
   this.fireRate = this.stats.maxFireRate;
@@ -64,7 +66,7 @@ eShip.prototype.update = function(msDuration) {
   }
   else {
     this.dead -= msDuration;
-    if (this.dead < 0) this.velocity = [-(Math.random()*5 + 2), 0];
+    if (this.dead < 0) this.setVelocity();
   }
   this.bullets.update(msDuration);
   
@@ -155,7 +157,14 @@ eShip.prototype.collide = function (){
   if (collide.length > 0) this.damage(50);
 
   var shipCollide = gamejs.sprite.spriteCollide($g.ship, this.bullets, true);
-  if (shipCollide.length > 0) $g.ship.damage(50);
+  if (shipCollide.length > 0){
+    shipCollide.forEach(function(bullet){
+      if (isNaN(bullet.damage))  alert(bullet.damage);
+      else {
+        $g.ship.damage(bullet.damage);
+      }
+    });
+  } 
 }
 
 
@@ -163,10 +172,12 @@ eShip.prototype.damage = function(amount){
   // Reduce health by 'amount' also kill user if health below 0
   this.health -= amount;
   if (this.health < 0) this.kill();
-  console.warn(amount);
+  // console.warn(amount);
 
 }
 
-
+eShip.prototype.setVelocity = function(){
+  this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
+}
 
 exports.eShip = eShip;

@@ -7,7 +7,7 @@ var Space = require('space').Space;
 var eLaser = function (rect, ship) {
 	// call superconstructor
 	eLaser.superConstructor.apply(this, arguments);
-	this.image = gamejs.image.load("./images/eLaser.png");
+	this.image = gamejs.image.load("./images/Enemies/laser.png");
 	this.originalImage = gamejs.transform.scale(this.image, rect);
 	this.image = gamejs.transform.rotate(this.originalImage, $m.degrees(ship.rotation));
 

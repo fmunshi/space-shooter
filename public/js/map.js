@@ -14,7 +14,7 @@ var Star = exports.Star =  function() {
 
   this.speedX = -(Math.random()*5 + 5);
 
-  this.image = gamejs.image.load("./images/star.png");
+  this.image = gamejs.image.load("./images/Map/star.png");
   this.originalImage = gamejs.transform.scale(this.image, [this.size, this.size] );
   this.image = gamejs.transform.rotate(this.originalImage, this.angle);
   

@@ -6,7 +6,7 @@ var $g = require('globals');
 var Laser = function (rect, ship) {
 	// call superconstructor
 	Laser.superConstructor.apply(this, arguments);
-	this.image = gamejs.image.load("./images/laser.png");
+	this.image = gamejs.image.load("./images/Player/laser.png");
 	this.originalImage = gamejs.transform.scale(this.image, rect);
 	this.image = gamejs.transform.rotate(this.originalImage, $m.degrees(ship.rotation));
 	this.rotation = ship.rotation;
@@ -48,7 +48,7 @@ Laser.prototype.update = function (msDuration){
 Laser.prototype.increaseSize = function(){
 	this.size[0] += 10;
 
-	this.image = gamejs.image.load("./images/laser.png");
+	this.image = gamejs.image.load("./images/Player/laser.png");
  	this.originalImage = gamejs.transform.scale(this.image, this.size);
  	this.image = gamejs.transform.rotate(this.originalImage, $m.degrees(this.rotation));
 };

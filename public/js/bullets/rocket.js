@@ -6,7 +6,7 @@ var $g = require('globals')
 var Rocket = function(rect, ship, pos) {
   // call superconstructor
   Rocket.superConstructor.apply(this, arguments);
-  this.image = gamejs.image.load("./images/rocket.png");
+  this.image = gamejs.image.load("./images/Player/rocket.png");
   this.originalImage = gamejs.transform.scale(this.image, rect);
   this.image = gamejs.transform.rotate(this.originalImage, $m.degrees(ship.rotation)+90);
 

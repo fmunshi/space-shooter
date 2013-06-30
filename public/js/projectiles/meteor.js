@@ -7,7 +7,7 @@ var Meteor = function (rect){
 
   Meteor.superConstructor.apply(this, arguments);
 
-  this.image = gamejs.image.load("./images/meteor.png");
+  this.image = gamejs.image.load("./images/Map/meteor.png");
   this.originalImage = gamejs.transform.scale(this.image, rect);
   this.image = gamejs.transform.rotate(this.originalImage, Math.random()*360);
 

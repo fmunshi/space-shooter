@@ -3,23 +3,40 @@ var $e = require("gamejs/event");
 var $t = require("gamejs/time");
 var $g = require("globals");
 var $ship = require("ship").Ship;
-var $eShip = require("AI/enemyShip").eShip;
+
 var $map = require("map");
 var $meteor = require("projectiles/meteor").Meteor;
 
-gamejs.preload(["./images/ship.png"]);
-gamejs.preload(["./images/rightShip.png"]);
-gamejs.preload(["./images/leftShip.png"]);
+gamejs.preload(["./images/Player/ship.png"]);
+gamejs.preload(["./images/Player/rightShip.png"]);
+gamejs.preload(["./images/Player/leftShip.png"]);
 
-gamejs.preload(["./images/rocket.png"]);
-gamejs.preload(["./images/laser.png"]);
 
-gamejs.preload(["./images/star.png"]);
-gamejs.preload(["./images/meteor.png"]);
+gamejs.preload(["./images/Player/rocket.png"]);
+gamejs.preload(["./images/Player/laser.png"]);
+
+gamejs.preload(["./images/Map/star.png"]);
+gamejs.preload(["./images/Map/meteor.png"]);
 gamejs.preload(["./images/StarsField.png"]);
 
-gamejs.preload(["./images/eLaser.png"]);
-gamejs.preload(["./images/eShip.png"]);
+//ENEMIES
+
+
+gamejs.preload(["./images/Enemies/laser.png"]);
+
+// ENEMIES
+var $boss = require("AI/boss").Boss;
+var $explorer = require("AI/explorer").Explorer;
+var $ufo = require("AI/ufo").ufo;
+var $raider = require("AI/raider").Raider;
+
+gamejs.preload(["./images/Enemies/boss.png"]);
+gamejs.preload(["./images/Enemies/ufo.png"]);
+gamejs.preload(["./images/Enemies/explorer.png"]);
+gamejs.preload(["./images/Enemies/heavyExplorer.png"]);
+gamejs.preload(["./images/Enemies/darkExplorer.png"]);
+gamejs.preload(["./images/Enemies/heavyRaider.png"]);
+gamejs.preload(["./images/Enemies/raider.png"]);
 
 gamejs.ready(function() {
 
@@ -46,16 +63,26 @@ gamejs.ready(function() {
     
     setTimeout(function() {
         for (var i = 0; i < 3; i++){
-            var eShip = new $eShip([80,80]);
-            $g.eShips.add(eShip);
+            var boss = new $boss([50,50]);
+            $g.eShips.add(boss);
+
+            var ufo = new $ufo([20,20]);
+            $g.eShips.add(ufo);
+
+            var raider = new $raider([60,60]);
+            $g.eShips.add(raider);
+
+            var explorer = new $explorer([80,80]);
+            $g.eShips.add(explorer);
         }
     }, 1000);
-    
+
     var bg = false;
+
     setTimeout(function(){
-            bg = new gamejs.Surface($g.game.screenSize);
-            bg.fill("#F00000");
-            bg.setAlpha(0.9);
+        bg = new gamejs.Surface($g.game.screenSize);
+        bg.fill("#F00000");
+        bg.setAlpha(0.9);
     }, 10000);
 
 

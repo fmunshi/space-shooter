@@ -25,7 +25,6 @@ var _PRELOADING = false;
  * All images must be preloaded before they can be used.
  * @example
  
- *     gamejs.preload(["./images/ship.png", "./images/sunflower.png"]);
  *     // ...later...
  *     display.blit(gamejs.image.load('images/ship.png'))
  *
