@@ -13,31 +13,38 @@ var Ship = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
   
   // [x,y]
-  this.pos = [50,50];
+  this.pos = [100,100];
   this.velocity = [0,0];
-
-  this.maxSpeed = 10;
+  this.size = rect
 
   //Angle in radians
   this.rotation = 0;
 
-  this.shooting = false;
-  this.firing = false;
-  this.fireRate = 100;
+  this.stats = {
+    fireRate    :   100,
+    maxSpeed    :   15,
+    weapons     :   ['rocket', 'laser'],
+    maxHealth   :   1000,
+    maxHeat     :   1000,
+    damage      :   100,
+    defense     :   100
+  };
 
-  this.weapon = 'rocket';
-  this.weapons = ['rocket', 'laser'];
+  // Stat related stuff
+  this.health = 1000;       // Health left
+  this.heat = 0;            // Heat for lasers
+  this.weapon = 'rocket';   // Default weapon is rocket
+  this.firing = false;      // For shooting lasers
+  this.shooting = false;    // For loading rockets
 
+  // Rect stuff
   this.rect = new gamejs.Rect(rect);
+  this.rect.width = this.image.rect.width;
+  this.rect.height = this.image.rect.height;
   this.rect.center = this.pos;
 
+  // All dem bullets
   this.bullets = new gamejs.sprite.Group();
-
-  this.health = 1000;
-  this.maxHealth = 1000;
-
-  this.heat = 0;
-  this.maxHeat = 1000;
 
   return this;
 };
@@ -48,15 +55,15 @@ Ship.prototype.update = function(msDuration) {
 
   if (this.heat > 0) this.heat -= 10;
   if (this.firing) this.shootLasers(msDuration);
+  if (this.moving) this.move();
 
   this.bullets.update(msDuration);
   this.collide();
   this.checkbounds();
 
-  if (this.moving) this.move();
   var velocity = $g.calcVelocity(msDuration, this.velocity);
-  this.moveIp(velocity);
-  this.decelerate(velocity);
+      this.moveIp(velocity);
+      this.decelerate(velocity);
 };
 
 
@@ -65,26 +72,25 @@ Ship.prototype.handle = function(event){
   if (event.type === $e.MOUSE_MOTION) {
       this.calculateAngle(event);
   }
-  if (event.type === $e.MOUSE_DOWN){
+
+  else if (event.type === $e.MOUSE_DOWN){
     this.calculateAngle(event);
     if (this.weapon === 'rocket') this.shootRockets(event);
     else this.firing = true;
   }
-  if (event.type === $e.KEY_DOWN) {
+
+  else if (event.type === $e.KEY_DOWN) {
     if (event.key === $e.K_SHIFT){
       this.switchWeapon();
     }
-
-    if (event.key === $e.K_a) this.moving = 'a';
-    else if (event.key === $e.K_s) this.moving = 's';
-    else if (event.key === $e.K_w) this.moving = 'w';
-    else if (event.key === $e.K_d) this.moving = 'd';
-
+    this.changeDirection(event);
   }
-  if (event.type == $e.KEY_UP){
+
+  else if (event.type == $e.KEY_UP){
     if (event.key === $e.K_a || event.key === $e.K_s || event.key === $e.K_w || event.key === $e.K_d) this.moving = false;
   }
-  if (event.type === gamejs.event.MOUSE_UP) {
+
+  else if (event.type === gamejs.event.MOUSE_UP) {
       this.firing = false;
   }
 };
@@ -107,11 +113,11 @@ Ship.prototype.moveIp = function(velocity){
 Ship.prototype.move = function(){
   var that = this;
 
-    if (Math.abs(this.velocity[1]) < this.maxSpeed){
+    if (Math.abs(this.velocity[1]) < this.stats.maxSpeed){
       if (that.moving === 's') that.velocity[1] += 1;
       else if (that.moving === 'w') that.velocity[1] -= 1;
     }
-    if (Math.abs(this.velocity[0]) < this.maxSpeed){
+    if (Math.abs(this.velocity[0]) < this.stats.maxSpeed){
       if (that.moving === 'a') that.velocity[0] -= 1;
       else if (that.moving === 'd') that.velocity[0] += 1;
     }
@@ -124,11 +130,12 @@ Ship.prototype.decelerate = function(velocity){
   if (this.velocity[0] < 0) { this.velocity[0] -= this.velocity[0]/10; }
   if (this.velocity[1] > 0) { this.velocity[1] -= this.velocity[1]/10; }
   if (this.velocity[1] < 0) { this.velocity[1] -= this.velocity[1]/10; }
+  if (this.velocity[0] === 0 && this.velocity[1] === 0) this.image = gamejs.image.load("./images/ship.png");
 };
 
 Ship.prototype.checkbounds = function(){
     // Check if user is out of bounds of the screen
-    
+
     // Left
     if (this.pos[0] < 0) { this.pos[0] = $g.game.screenSize[0]-100; }
     // Right
@@ -170,8 +177,7 @@ Ship.prototype.shootRockets = function (event){
   // Ship shoots rockets, on mouse down, if the user has rockets selected
   var that = this;
   if (!this.shooting) {
-      var rocket = new $rocket([20, 50], that.rotation, that.velocity, that.pos);
-      rocket.ship = this;
+      var rocket = new $rocket([20, 50], that);
       this.bullets.add(rocket);
       this.shooting = true;
       this.loadRocket();
@@ -191,33 +197,65 @@ Ship.prototype.shootLasers = function (msDuration){
   // Shoot lasers while mouse is down, stop if heat is maxed out
 
   var that = this;
-  if (this.heat > this.maxHeat) this.fireRate = 100;
+  if (this.heat > this.stats.maxHeat) this.stats.fireRate = 100;
   else this.heat += 20;
 
-  if (this.fireRate < 0){
-      var laser = new $laser([50, 5], that.rotation, that.velocity, that.pos);
-      laser.ship = this;
+  if (this.stats.fireRate < 0){
+      var laser = new $laser([50, 5], that);
+      // laser.ship = that;
       this.bullets.add(laser);
-      this.fireRate = 75;
+      this.stats.fireRate = 75;
   }
-  else this.fireRate -= msDuration;
+  else this.stats.fireRate -= msDuration;
 
 };
 
 Ship.prototype.switchWeapon = function(){
   // Cycle through weapons array when user hits SHIFT
 
-  var i = this.weapons.indexOf(this.weapon);
-  if (this.weapons[i+1] === undefined) this.weapon = this.weapons[0];
-  else this.weapon = this.weapons[i+1];
+  var i = this.stats.weapons.indexOf(this.weapon);
+  if (this.stats.weapons[i+1] === undefined) this.weapon = this.stats.weapons[0];
+  else this.weapon = this.stats.weapons[i+1];
 };
+
+Ship.prototype.changeDirection = function(event){
+
+    var angle = $m.degrees(this.rotation);
+    console.warn(angle)
+    this.image = gamejs.image.load("./images/ship.png");
+
+    if (event.key === $e.K_a) {
+      this.moving = 'a';
+      if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/rightShip.png");
+    }
+    else if (event.key === $e.K_s){
+      this.moving = 's';
+      this.image = gamejs.image.load("./images/rightShip.png");
+      if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/ship.png");
+    } 
+    else if (event.key === $e.K_w){
+      this.moving = 'w';
+      this.image = gamejs.image.load("./images/leftShip.png");
+      if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/ship.png");
+    }
+    else if (event.key === $e.K_d){
+      this.moving = 'd';
+      if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/rightShip.png");
+    } 
+
+    this.originalImage = gamejs.transform.scale(this.image, this.size);
+    this.image = gamejs.transform.rotate(this.originalImage, angle+90);
+
+    this.rect.width = this.image.rect.width;
+    this.rect.height = this.image.rect.height;
+}
 
 Ship.prototype.collide = function (){
 
   // Check for collision with projectiles
   var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
   if (collide.length > 0){
-    this.damage(50);
+    this.damage(0.5*this.stats.defense);
     this.velocity[0] = this.velocity[0]/10;
     this.velocity[1] = this.velocity[1]/10;
   }
@@ -225,7 +263,7 @@ Ship.prototype.collide = function (){
 
 Ship.prototype.kill = function(){
     // TODO add more stuff when the user dies
-    alert('You died');
+    // alert('You died');
     location.reload();
 }
 
@@ -233,6 +271,7 @@ Ship.prototype.damage = function(amount){
   // Reduce health by 'amount' also kill user if health below 0
   this.health -= amount;
   if (this.health < 0) this.kill();
+
 }
 
 exports.Ship = Ship;

@@ -42,19 +42,26 @@ Star.prototype.checkbounds = function(){
 };
 
 var drawStars = exports.drawStars = function (display, msDuration){
-  var font = new gamejs.font.Font('20px monospace', '#AA0000');
-  display.blit(font.render('FPS' + Math.floor(1000/msDuration)), [10,30]);
-	var stars = $g.stars;
 
-	stars.forEach(function(star){
-		star.checkbounds();
-		star.draw(display);
-		star.update(msDuration);
-	});
+  // DEBUG: FPS
+  // var font = new gamejs.font.Font('20px monospace', '#AA0000');
+  // display.blit(font.render('FPS' + Math.floor(1000/msDuration)), [10,30]);
+  var stars = $g.stars;
+  stars.forEach(function(star){
+    star.checkbounds();
+    star.draw(display);
+    star.update(msDuration);
+  });
 
 };
 
 var drawHealth = exports.drawHealth = function(display){
-  gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-50], [$g.ship.health / $g.ship.maxHealth * $g.ship.originalImage.getSize()[0], 2]), 0);
-  gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-40], [$g.ship.heat / $g.ship.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
+  gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-50], [$g.ship.health / $g.ship.stats.maxHealth * $g.ship.originalImage.getSize()[0], 2]), 0);
+  gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-40], [$g.ship.heat / $g.ship.stats.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
+
+  $g.eShips.forEach(function(eShip){
+      gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-50], [eShip.health / eShip.stats.maxHealth * eShip.originalImage.getSize()[0], 2]), 0);
+      gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-40], [eShip.heat / eShip.stats.maxHeat * eShip.originalImage.getSize()[0], 2]), 0);
+  });
+
 }

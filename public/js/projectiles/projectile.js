@@ -3,6 +3,7 @@ var $g = require('globals');
 var $m = require('gamejs/utils/math');
 
 //General Projectile class
+
 var Projectile =  function() {
   // call superconstructor
   Projectile.superConstructor.apply(this, arguments);

@@ -19,22 +19,28 @@ var eShip = function(rect) {
   this.rect = new gamejs.Rect(rect);
   this.rect.center = this.pos;
 
+
+  this.stats = {
+    maxSpeed    :   15,
+    maxHealth   :   200,
+    maxFireRate :   Math.random()*1000 + 500,
+    accuracy    :   0,
+    luck        :   0
+  };
+
+  this.health = this.stats.maxHealth;
+  this.fireRate = this.stats.maxFireRate;
+
   this.bullets = new gamejs.sprite.Group();
 
   //Angle in radians
   this.rotation = 0;
   this.shooting = false;
 
-  this.health = 100;
-  this.maxHealth = 100;
 
-  // this.accuracy = 20;
-  this.accuracy = 0;
-
-  this.maxFireRate = Math.random()*1000 + 500;
-  // this.maxFireRate = 1;
-  this.fireRate = this.maxFireRate;
   this.dead = -1;
+
+  this.dodging = false
 
   return this;
 };
@@ -50,11 +56,11 @@ eShip.prototype.update = function(msDuration) {
 
     if (this.fireRate > 0) this.fireRate -= msDuration;
     else {
-      this.fireRate = this.maxFireRate;
+      this.fireRate = this.stats.maxFireRate;
       this.shootLasers();
     }
     var velocity = $g.calcVelocity(msDuration, this.velocity);
-    this.rect.moveIp(velocity);
+    this.moveIp(velocity);
   }
   else {
     this.dead -= msDuration;
@@ -69,9 +75,33 @@ eShip.prototype.draw = function (display){
   this.bullets.draw(display);
 };
 
+eShip.prototype.handle = function(event){
+  if (event.type === $e.MOUSE_DOWN) this.dodging = true;
+
+  else if (event.type === $e.MOUSE_MOTION) {
+    if (this.dodging) this.dodge(event);
+  }
+
+  else if (event.type === $e.MOUSE_UP) this.dodging = false;
+};
+
+
+eShip.prototype.dodge = function(event){
+  var that = this;
+
+  if (Math.abs(event.pos[0]-that.pos[0]) < 100){
+    if (Math.abs(event.pos[1]-that.pos[1]) < 100){
+      that.velocity = [-(Math.random()*10),-(Math.random()*10)];
+      setTimeout(function(){
+        that.velocity = [-(Math.random()*10) + 1, 0];
+      }, 100);
+    }
+  }
+};
+
 
 eShip.prototype.checkbounds = function(){
-    var pos = this.rect.center;
+    var pos = this.pos;
     if ( (pos[0] < - 150) || (pos[0] > $g.game.screenSize[0] + 100) || (pos[1] < -100) || (pos[1] > $g.game.screenSize[1] + 100) )  { 
       this.kill();
     }
@@ -79,10 +109,10 @@ eShip.prototype.checkbounds = function(){
 
 eShip.prototype.kill = function () {
   this.dead = 1000;
-  this.rect.center = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
+  this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
+  this.rect.center = this.pos;
+  this.health = this.stats.maxHealth;
   this.velocity = [0,0];
-
-  
 }
 
 //ANGLE STUFF
@@ -114,19 +144,29 @@ eShip.prototype.calculateAngle = function (ship){
 eShip.prototype.shootLasers = function (){
   var that = this;
   var angle = $m.degrees(that.rotation);
-  angle -= Math.random()*this.accuracy - this.accuracy/2;
+  if (Math.random() < ((100 - this.stats.luck)/100)) angle -= Math.random()*this.stats.accuracy - this.stats.accuracy/2;
   angle = $m.radians(angle);
-  var laser = new $laser([40, 5], angle, that.velocity, that.rect);
-  laser.ship = this;
+  var laser = new $laser([40, 5], that);
   this.bullets.add(laser);
 };
 
 eShip.prototype.collide = function (){
   var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
-  if (collide.length > 0) this.kill();
+  if (collide.length > 0) this.damage(50);
 
   var shipCollide = gamejs.sprite.spriteCollide($g.ship, this.bullets, true);
   if (shipCollide.length > 0) $g.ship.damage(50);
 }
+
+
+eShip.prototype.damage = function(amount){
+  // Reduce health by 'amount' also kill user if health below 0
+  this.health -= amount;
+  if (this.health < 0) this.kill();
+  console.warn(amount);
+
+}
+
+
 
 exports.eShip = eShip;
