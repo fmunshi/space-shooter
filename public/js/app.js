@@ -23,7 +23,7 @@ gamejs.ready(function() {
                 eShip.handle(event);
             });            
         }
-
+        
         // IF event is a key down 
         if (event.type === 1){
             // 80 === "p" for pause

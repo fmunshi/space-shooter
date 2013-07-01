@@ -8,7 +8,10 @@ exports.game = {
     isPaused      :   false
 };
 
-exports.stars = [];
+
+exports.mouse = [0,0];
+
+exports.stars = new Array();
 
 exports.ship;
 

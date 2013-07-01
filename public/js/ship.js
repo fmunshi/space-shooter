@@ -66,6 +66,8 @@ Ship.prototype.update = function(msDuration) {
   this.collide();
   this.checkbounds();
 
+  this.calculateAngle($g.mouse);
+
   var velocity = $g.calcVelocity(msDuration, this.velocity);
       this.moveIp(velocity);
       this.decelerate(velocity);
@@ -75,11 +77,11 @@ Ship.prototype.update = function(msDuration) {
 Ship.prototype.handle = function(event){
 
   if (event.type === $e.MOUSE_MOTION) {
-      this.calculateAngle(event);
+      $g.mouse = event.pos;
   }
 
   else if (event.type === $e.MOUSE_DOWN){
-    this.calculateAngle(event);
+    $g.mouse = event.pos;
     if (this.weapon === "rocket") this.shootRockets(event);
     else this.firing = true;
   }
@@ -152,11 +154,11 @@ Ship.prototype.checkbounds = function(){
 };
 
 
-Ship.prototype.calculateAngle = function (event){
+Ship.prototype.calculateAngle = function (pos){
   // Calculate the ships rotation and adjust image size based on it
 
-  var mX = event.pos[0] - 30
-    , mY = event.pos[1] - 30
+  var mX = pos[0] - 30
+    , mY = pos[1] - 30
     , sX = this.pos[0]
     , sY = this.pos[1]
     , dY = mY - sY

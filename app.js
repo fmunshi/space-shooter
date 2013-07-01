@@ -14,7 +14,7 @@ app.get("/", function(req, res){
 
 
 
-
+var http = require('http');
 var cronJob = require('cron').CronJob;
 
 new cronJob('0,30 * * * *', function(){
