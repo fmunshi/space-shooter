@@ -14,6 +14,26 @@ app.get("/", function(req, res){
 
 
 
+
+var cronJob = require('cron').CronJob;
+
+new cronJob('0,30 * * * *', function(){
+  http.get(
+    {
+        host: 'farhan-space-shooter.herokuapp.com',
+        port: 80
+    }, 
+    function(response) {
+      response.on('end', function () {
+      console.log('Site reactivated');
+    });
+  }).on('error', function(e) {
+    console.log('ERROR: ' + e.message);
+  });
+}, null, true);
+
+
+
 var port = process.env.PORT || 1337;
 app.listen(port, function() {
   console.log("Listening on " + port);
