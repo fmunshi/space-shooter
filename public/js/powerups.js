@@ -73,10 +73,12 @@ Powerup.prototype.kill = function (){
       // kill
       $g.eShips.forEach(function(ship){
         ship.kill();
+        $g.ship.addExp(ship.exp);
       });
 
       $g.projectiles.forEach(function(proj){
         proj.kill();
+        $g.ship.addExp(1)
       });
 
       break;

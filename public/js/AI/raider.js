@@ -20,6 +20,9 @@ var Raider = function(rect) {
     luck        :   0,
     damage      :   100
   };
+
+  this.exp = 20;
+
   this.health = this.stats.maxHealth;
   return this;
 };

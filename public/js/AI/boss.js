@@ -20,6 +20,9 @@ var Boss = function(rect) {
     luck        :   0,
     damage      :   100
   };
+
+  this.exp = 100;
+
   this.health = this.stats.maxHealth;
 
   this.setVelocity();

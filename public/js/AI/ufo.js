@@ -20,6 +20,9 @@ var ufo = function(rect) {
     luck        :   0,
     damage      :   100
   };
+
+  this.exp = 5;
+
   this.health = this.stats.maxHealth;
   this.setVelocity();
 

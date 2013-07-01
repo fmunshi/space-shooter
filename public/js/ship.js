@@ -31,11 +31,15 @@ var Ship = function(rect) {
     maxHeat     :   1000,
     damage      :   100,
     defense     :   100,
-    luck        :   0.1
+    luck        :   0.1,
+    exp         :   100
   };
 
+  this.level = 1;
+  this.exp = 0;
+
   // Stat related stuff
-  this.health = 1000;       // Health left
+  this.health = this.stats.maxHealth;       // Health left
   this.heat = 0;            // Heat for lasers
   this.weapon = "rocket";   // Default weapon is rocket
   this.firing = false;      // For shooting lasers
@@ -272,7 +276,8 @@ Ship.prototype.collide = function (){
 Ship.prototype.kill = function(){
     // TODO add more stuff when the user dies
     // alert("You died");
-    location.reload();
+    $g.game.isEnded = true;
+    // location.reload();
 }
 
 Ship.prototype.damage = function(amount){
@@ -299,6 +304,35 @@ Ship.prototype.reload = function(){
   // All dem bullets
   this.bullets = new gamejs.sprite.Group();
 
+}
+
+Ship.prototype.addExp = function(amount){
+  this.exp += amount; 
+  if (this.exp > this.stats.exp){
+    this.exp = this.exp - this.stats.exp;
+    this.level += 1;
+    this.stats.exp += 10*this.level;
+
+    console.log('LEVELED UP TO: '+this.level);
+    
+    this.stats.maxHealth += 10;
+    this.stats.maxHeat += 10;
+
+    if (this.level%2 === 0){
+      this.stats.defense += 10;
+    }
+
+    if (this.level%3 === 0){
+      this.stats.damage += 10;
+    }
+
+    if (this.level%5 === 0){
+      this.stats.luck += 0.01
+    }
+
+    console.warn(this.stats)
+    $g.score += amount;
+  }
 }
 
 exports.Ship = Ship;

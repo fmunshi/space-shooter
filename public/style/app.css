@@ -1,7 +1,68 @@
 body {
-	cursor:crosshair;
+  background: #20102F!important;
+  /*url('./../images/screen.png')!important;*/
+  color: #70607F!important;
+}
+.hero-unit {
+  padding: 100px!important;
+  background: #20102F url('./../images/screen.png')!important;
+  background-position:-100px -120px!important; 
+
+}
+.info {
+  font-size: 1.2em;
 }
 
-body.mouseDown:hover{
- 	cursor:crosshair;
+.infoT {
+  width: 100%;
+  font-size: 1.2em;
+}
+
+.info img{
+  float:left;
+  text-align: left;
+  width: 30px;
+  height: 30px;
+  padding-right: 10%;
+}
+.info li {
+  list-style: none;
+  color: #70607F;
+  padding: 10px;
+}
+
+
+.infoT td {
+  color: #70607F;
+  padding: 10px;
+}
+
+
+.info .left{
+
+  padding-right: 10%;
+}
+.infoT .left{
+  padding-left: 20%;
+  padding-right: 10%;
+}
+
+.info .right{
+  /*display:inline-table;*/
+  text-align: right;
+  padding-left: 100px;
+  /*float:right;*/
+}
+
+.infoT .right{
+  /*display:inline-table;*/
+  /*text-align: right;*/
+  padding-left: 100px;
+  /*float:right;*/
+}
+
+.play {
+  width: 100%; 
+  border-bottom: 3px solid #A090AF; 
+  padding: 10px;
 }

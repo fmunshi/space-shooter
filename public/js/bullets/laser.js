@@ -72,6 +72,7 @@ Laser.prototype.collide = function (){
     this.kill();
     eCollided.forEach(function(eShip){
       eShip.damage(that.damage);
+      if (eShip.dead < 0) $g.ship.addExp(eShip.exp);
     });
   }
 }

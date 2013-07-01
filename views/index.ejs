@@ -4,37 +4,123 @@
     <title>GameJS Application</title>
     <!-- Styling -->
     <link rel="stylesheet" type="text/css" href="style/app.css">
+    <link rel="stylesheet" type="text/css" href="style/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style/bootstrap-responsive.min.css">
 
     <!-- Start javascript/main.js -->
     <script src="lib/yabble.js"></script>
     <script src="lib/gamejs.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
+</head>
+<body>
+
+
     <script>
         $(document).ready(function(){
             require.setModuleRoot("js/");
-            // require.run("app");
+            $('#start').click(function(event){
+                $('.container').fadeOut(100, function(){
+                    $('#gjs-canvas').fadeIn(1000);
+                    require.run("app");
+                });
+            });
         });
     </script>
 
-</head>
-    <div>
-        <canvas id="gjs-canvas"></canvas>
-        <ul>
-            <li>
-                Shift to switch weapons
-            </li>
-            <li>
-                Move with WASD
-            </li>
-            <li>
-                Aim with mouse
-            </li>
-        </ul>
-        <button onclick = 'require.run("app");'>Start game</button>
-        <p>
-        Powered by <a href="http://gamejs.org">GameJs</a>.
-        </p>
+    <canvas style = 'display:none;' id="gjs-canvas"></canvas>
+
+    <div class="container">
+
+        <div class = 'hero-unit'>
+            <br><br><br>
+<!--             <h1 class="text-center">
+                Space
+            </h1> -->
+        </div>
+
+        <center class = 'play' >
+            <h1><a href="#" id = 'start'>&nbsp; Play! &nbsp;»</a></h1>
+        </center>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <h2 class = 'text-center'>
+                    Powerups
+                </h2>
+                <p>
+                    <ul class = 'info'>
+                        <li>
+                            <img src="images/Powerups/damage.png">
+                            <td class = 'right'>
+                                Doubles Damage
+                            </td>
+                        </li>
+                        <li>
+                            <img src="images/Powerups/health.png"> 
+                            <td class = 'right'>
+                                Refill health
+                            </td>
+                        </li>
+                        <li>
+                            <img src="images/Powerups/invincible.png"> 
+                            <td class = 'right'>
+                                Become temporarily invincible
+                            </td>
+                        </li>
+                        <li>
+                            <img src="images/Powerups/kill.png"> 
+                            <td class = 'right'>
+                                Kills all meteors and enemies on screen
+                            </td>
+                        </li>
+                        <li>
+                            <img src="images/Powerups/spray.png"> 
+                            <td class = 'right'>
+                                Become temporarily immune to heat
+                            </td>
+                        </li>
+                    </ul>
+                </p>
+            </div>
+            <div class="span6">
+                <h2 class = 'text-center'>
+                    Controls
+                </h2>
+
+                    <table class = 'infoT'>
+                        <tr>
+                            <td class = 'left'>
+                                SHIFT 
+                            </td> 
+                            <td class = 'right'>
+                                Switch Weapons
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class = 'left'> W/A/S/D </td> 
+                            <td class = 'right'>
+                                Move
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class = 'left'> MOUSE </td> 
+
+                            <td class = 'right'>
+                                Aim
+                            </td>
+                            
+                        </tr>
+                    </table>
+            </div>
+        </div>
+
+        <footer>
+            <p class = 'text-center'>
+                Powered by <a href="http://gamejs.org">GameJs</a> and <a href='http://opengameart.org/'>Open game art</a>
+            </p>
+        </footer>
     </div>
-    </body>
+</body>
 </html>

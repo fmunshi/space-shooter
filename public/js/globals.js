@@ -5,9 +5,25 @@ exports.game = {
     screenSize    :   [window.innerWidth, window.innerHeight],
     xMax          :   window.innerWidth,
     yMax          :   window.innerHeight,
-    isPaused      :   false
+    isPaused      :   false,
+    isEnded       :   false
 };
 
+exports.score = 0;
+
+exports.level = {
+  number        :   1,
+  maxMeteors    :   1,
+  maxUFOs       :   1,
+  maxExplorers  :   1,
+  maxRaiders    :   1,
+  time          :   10000,
+  boss          :   false
+};
+
+exports.time = 0;
+
+exports.totalTime = 0;
 
 exports.mouse = [0,0];
 
@@ -31,6 +47,13 @@ exports.calcVelocity = function (msDuration, velocity){
 
   return newVelocity;
 }
+
+
+
+
+
+
+
 
 
 
@@ -61,15 +84,3 @@ exports.texts = {
   pushing:   fonts.small.render("Push your enemies!", "#FFFFFF"),
   stashing:  fonts.small.render("Stashing a new Misil!", "#FFFFFF")
 };
-
-exports.level = {
-  number        :   1,
-  maxMeteors    :   1,
-  maxUFOs       :   1,
-  maxExplorers  :   1,
-  maxRaiders    :   1,
-  time          :   10000,
-  boss          :   false
-};
-
-exports.time = 0;

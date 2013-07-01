@@ -21,6 +21,8 @@ var Explorer = function(rect) {
     damage      :   100
   };
 
+  this.exp = 10;
+  
   this.health = this.stats.maxHealth;
   
   return this;

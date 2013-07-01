@@ -17,13 +17,13 @@ gamejs.ready(function() {
     var ship = $g.ship;
 
     gamejs.onEvent(function(event) {
-        if (!$g.game.isPaused){
+        if (!($g.game.isPaused|| $g.game.isEnded)){
             ship.handle(event);
             $g.eShips.forEach(function(eShip){
                 eShip.handle(event);
             });            
         }
-        
+
         // IF event is a key down 
         if (event.type === 1){
             // 80 === "p" for pause
@@ -36,9 +36,10 @@ gamejs.ready(function() {
     gamejs.onTick(function(msDuration) {
 
     
-        if (!$g.game.isPaused){
+        if (!($g.game.isPaused|| $g.game.isEnded)){
 
             $g.time += msDuration;
+            $g.totalTime += msDuration;
             if ($g.time > $g.level.time) $setup.increaseLevel();
 
             display.fill("#20102F");
@@ -59,7 +60,10 @@ gamejs.ready(function() {
             $map.drawHealth(display);
         }
 
-        else console.warn("Paused");
+        else if ($g.game.isEnded){
+            display.fill("#20102F");
+            $map.drawScore(display);
+        }
 
 
    });

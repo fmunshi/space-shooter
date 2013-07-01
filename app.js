@@ -13,7 +13,6 @@ app.get("/", function(req, res){
 });
 
 
-
 var http = require('http');
 var cronJob = require('cron').CronJob;
 
@@ -31,7 +30,6 @@ new cronJob('0,30 * * * *', function(){
     console.log('ERROR: ' + e.message);
   });
 }, null, true);
-
 
 
 var port = process.env.PORT || 1337;

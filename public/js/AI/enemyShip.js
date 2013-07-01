@@ -29,6 +29,8 @@ var eShip = function(rect) {
     damage      :   10
   };
 
+  this.exp = 10;
+
   this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
 
   this.health = this.stats.maxHealth;
