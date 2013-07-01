@@ -331,8 +331,8 @@ Ship.prototype.addExp = function(amount){
     }
 
     console.warn(this.stats)
-    $g.score += amount;
   }
+  $g.score += amount;
 }
 
 exports.Ship = Ship;
