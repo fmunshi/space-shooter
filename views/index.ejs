@@ -19,6 +19,11 @@
     <script>
         $(document).ready(function(){
             require.setModuleRoot("js/");
+
+            $("#gjs-canvas").mousedown(function(event){
+                event.preventDefault();
+            });
+
             $('#start').click(function(event){
                 $('.container').fadeOut(100, function(){
                     $('#gjs-canvas').fadeIn(1000);
