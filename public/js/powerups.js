@@ -7,12 +7,13 @@ var Powerup =  function(pos) {
   // call superconstructor
   Powerup.superConstructor.apply(this, arguments);
   var create = false;
-  if (Math.random() < 0.5) create = true;
+  if (Math.random() < $g.ship.stats.luck) create = true;
+  // create = true; // hack
 
   var types = ["damage", "health", "invincible", "kill", "spray"];
 
   this.index = Math.floor(Math.random()*types.length);
-  // this.index = 0;
+  // this.index = 3; // hack
   this.type = types[this.index]
   this.size = [50,50];
 
@@ -24,7 +25,8 @@ var Powerup =  function(pos) {
 
   this.rect = new gamejs.Rect(this.size);
   this.pos = pos;
-  this.rect.center = pos
+  this.rect.center = pos;
+
   if (create) {
     var that = this;
     $g.powerups.add(this);
@@ -33,7 +35,13 @@ var Powerup =  function(pos) {
     }, 3000);
   }
 };
+
 gamejs.utils.objects.extend(Powerup, gamejs.sprite.Sprite);
+
+Powerup.prototype.update = function(msDuration){
+  this.rect.moveIp([-5,0]);
+}
+
 
 Powerup.prototype.kill = function (){
   switch (this.index) {
@@ -65,6 +73,10 @@ Powerup.prototype.kill = function (){
       // kill
       $g.eShips.forEach(function(ship){
         ship.kill();
+      });
+
+      $g.projectiles.forEach(function(proj){
+        proj.kill();
       });
 
       break;

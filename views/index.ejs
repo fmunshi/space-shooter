@@ -11,16 +11,27 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <script>
-        require.setModuleRoot("js/");
-        require.run("app");
+        $(document).ready(function(){
+            require.setModuleRoot("js/");
+            // require.run("app");
+        });
     </script>
 
 </head>
     <div>
-        <div id="gjs-loader">
-            Loading...
-        </div>
         <canvas id="gjs-canvas"></canvas>
+        <ul>
+            <li>
+                Shift to switch weapons
+            </li>
+            <li>
+                Move with WASD
+            </li>
+            <li>
+                Aim with mouse
+            </li>
+        </ul>
+        <button onclick = 'require.run("app");'>Start game</button>
         <p>
         Powered by <a href="http://gamejs.org">GameJs</a>.
         </p>

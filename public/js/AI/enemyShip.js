@@ -127,7 +127,7 @@ eShip.prototype.checkbounds = function(){
 eShip.prototype.kill = function (keepAlive) {
   var powerup = new $powerup(this.pos);
 
-  this.dead = 1000;
+  this.dead = 3000;
   this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
   this.rect.center = this.pos;
   if (!keepAlive) this.health = this.stats.maxHealth;

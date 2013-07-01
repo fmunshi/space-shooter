@@ -52,6 +52,7 @@ gamejs.ready(function() {
             $g.eShips.update(msDuration);
             $g.eShips.draw(display);
 
+            $g.powerups.update(msDuration);
             $g.powerups.draw(display);
 
             $map.drawStars(display, msDuration);

@@ -19,7 +19,7 @@ var Ship = function(rect) {
 
   this.spray = false;
   this.invincible = false;
-  
+
   //Angle in radians
   this.rotation = 0;
 
@@ -30,7 +30,8 @@ var Ship = function(rect) {
     maxHealth   :   1000,
     maxHeat     :   1000,
     damage      :   100,
-    defense     :   100
+    defense     :   100,
+    luck        :   0.1
   };
 
   // Stat related stuff
