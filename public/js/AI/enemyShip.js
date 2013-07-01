@@ -1,9 +1,10 @@
-var gamejs = require('gamejs');
-var $g = require('globals');
-var $e = require('gamejs/event');
-var $m = require('gamejs/utils/math');
-var $laser = require('AI/enemyLaser').eLaser;
-var $ship  = require('ship').Ship;
+var gamejs = require("gamejs");
+var $g = require("globals");
+var $e = require("gamejs/event");
+var $m = require("gamejs/utils/math");
+var $laser = require("AI/enemyLaser").eLaser;
+var $ship  = require("ship").Ship;
+var $powerup = require("powerups").Powerup
 
 var eShip = function(rect) {
   // call superconstructor
@@ -93,9 +94,9 @@ eShip.prototype.dodge = function(event){
 
   if (Math.abs(event.pos[0]-that.pos[0]) < 100){
     if (Math.abs(event.pos[1]-that.pos[1]) < 100){
-      that.velocity = [-(Math.random()*10),-(Math.random()*10)];
+      that.velocity = [-(Math.random()*that.stats.maxSpeed),-(Math.random()*that.stats.maxSpeed)];
       setTimeout(function(){
-        that.velocity = [-(Math.random()*10) + 1, 0];
+        that.velocity = [-(Math.random()*that.stats.maxSpeed), 0];
       }, 100);
     }
   }
@@ -104,16 +105,32 @@ eShip.prototype.dodge = function(event){
 
 eShip.prototype.checkbounds = function(){
     var pos = this.pos;
+    // if (this.stats.maxSpeed > 0){
+    //   if (this.pos[0] < 100) {
+    //     this.stats.maxSpeed *= -1;
+    //     this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
+    //   }      
+    // }
+    // else{ 
+    //   if (this.pos[0] > $g.game.screenSize[0]) {
+    //     this.stats.maxSpeed*= -1;
+    //     this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
+    //   }
+    // }
+
     if ( (pos[0] < - 150) || (pos[0] > $g.game.screenSize[0] + 100) || (pos[1] < -100) || (pos[1] > $g.game.screenSize[1] + 100) )  { 
-      this.kill();
+      this.kill(true);
     }
+
 };
 
-eShip.prototype.kill = function () {
+eShip.prototype.kill = function (keepAlive) {
+  var powerup = new $powerup(this.pos);
+
   this.dead = 1000;
   this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
   this.rect.center = this.pos;
-  this.health = this.stats.maxHealth;
+  if (!keepAlive) this.health = this.stats.maxHealth;
   this.velocity = [0,0];
 }
 
@@ -169,7 +186,7 @@ eShip.prototype.collide = function (){
 
 
 eShip.prototype.damage = function(amount){
-  // Reduce health by 'amount' also kill user if health below 0
+  // Reduce health by "amount" also kill user if health below 0
   this.health -= amount;
   if (this.health < 0) this.kill();
   // console.warn(amount);
@@ -178,6 +195,7 @@ eShip.prototype.damage = function(amount){
 
 eShip.prototype.setVelocity = function(){
   this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
+  console.log(this.velocity);
 }
 
 exports.eShip = eShip;

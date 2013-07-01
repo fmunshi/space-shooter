@@ -1,6 +1,6 @@
-var $g = require('globals');
-var $ship = require('ship').Ship;
-var gamejs = require('gamejs');
+var $g = require("globals");
+var $ship = require("ship").Ship;
+var gamejs = require("gamejs");
 
 
 var Star = exports.Star =  function() {
@@ -44,8 +44,8 @@ Star.prototype.checkbounds = function(){
 var drawStars = exports.drawStars = function (display, msDuration){
 
   // DEBUG: FPS
-  // var font = new gamejs.font.Font('20px monospace', '#AA0000');
-  // display.blit(font.render('FPS' + Math.floor(1000/msDuration)), [10,30]);
+  // var font = new gamejs.font.Font("20px monospace", "#AA0000");
+  // display.blit(font.render("FPS" + Math.floor(1000/msDuration)), [10,30]);
   var stars = $g.stars;
   stars.forEach(function(star){
     star.checkbounds();
@@ -56,12 +56,34 @@ var drawStars = exports.drawStars = function (display, msDuration){
 };
 
 var drawHealth = exports.drawHealth = function(display){
-  gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-50], [$g.ship.health / $g.ship.stats.maxHealth * $g.ship.originalImage.getSize()[0], 2]), 0);
-  gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-40], [$g.ship.heat / $g.ship.stats.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
+
+  display.blit($g.fonts.small.render("Level: "+$g.level.number, "#999"), [50, $g.game.screenSize[1]-100]);
+
+  if ($g.ship.invincible){
+      var bg = new gamejs.Surface($g.game.screenSize);
+      bg.fill("#EEE");
+      bg.setAlpha(0.8);
+      display.blit(bg, [0,0]);
+  }
+  else if ($g.ship.spray) {
+    var bg = new gamejs.Surface($g.game.screenSize);
+    bg.fill("#33F");
+    bg.setAlpha(0.8);
+    display.blit(bg, [0,0]);
+  }
+  else if ($g.ship.health/$g.ship.stats.maxHealth < 0.1) {
+    var bg = new gamejs.Surface($g.game.screenSize);
+    bg.fill("#F00000");
+    bg.setAlpha(0.8);
+    display.blit(bg, [0,0]);
+  }
+  
+  gamejs.draw.rect(display, "#00AA00", new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-50], [$g.ship.health / $g.ship.stats.maxHealth * $g.ship.originalImage.getSize()[0], 2]), 0);
+  gamejs.draw.rect(display, "#FF0A00", new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-40], [$g.ship.heat / $g.ship.stats.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
 
   $g.eShips.forEach(function(eShip){
-      gamejs.draw.rect(display, '#00AA00', new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-50], [eShip.health / eShip.stats.maxHealth * eShip.originalImage.getSize()[0], 2]), 0);
-      gamejs.draw.rect(display, '#FF0A00', new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-40], [eShip.heat / eShip.stats.maxHeat * eShip.originalImage.getSize()[0], 2]), 0);
+      gamejs.draw.rect(display, "#00AA00", new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-50], [eShip.health / eShip.stats.maxHealth * eShip.originalImage.getSize()[0], 2]), 0);
+      gamejs.draw.rect(display, "#FF0A00", new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-40], [eShip.heat / eShip.stats.maxHeat * eShip.originalImage.getSize()[0], 2]), 0);
   });
 
 }

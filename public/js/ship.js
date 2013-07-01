@@ -1,9 +1,9 @@
-var gamejs = require('gamejs');
-var $g = require('globals');
-var $e = require('gamejs/event');
-var $m = require('gamejs/utils/math');
-var $rocket = require('bullets/rocket').Rocket;
-var $laser = require('bullets/laser').Laser;
+var gamejs = require("gamejs");
+var $g = require("globals");
+var $e = require("gamejs/event");
+var $m = require("gamejs/utils/math");
+var $rocket = require("bullets/rocket").Rocket;
+var $laser = require("bullets/laser").Laser;
 
 var Ship = function(rect) {
   // call superconstructor
@@ -13,17 +13,20 @@ var Ship = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
   
   // [x,y]
-  this.pos = [100,100];
-  this.velocity = [0,0];
+  this.pos = [0,0];
+  this.velocity = [5,5];
   this.size = rect
 
+  this.spray = false;
+  this.invincible = false;
+  
   //Angle in radians
   this.rotation = 0;
 
   this.stats = {
     fireRate    :   100,
     maxSpeed    :   15,
-    weapons     :   ['rocket', 'laser'],
+    weapons     :   ["rocket", "laser"],
     maxHealth   :   1000,
     maxHeat     :   1000,
     damage      :   100,
@@ -33,9 +36,10 @@ var Ship = function(rect) {
   // Stat related stuff
   this.health = 1000;       // Health left
   this.heat = 0;            // Heat for lasers
-  this.weapon = 'rocket';   // Default weapon is rocket
+  this.weapon = "rocket";   // Default weapon is rocket
   this.firing = false;      // For shooting lasers
   this.shooting = false;    // For loading rockets
+  this.moving = false;
 
   // Rect stuff
   this.rect = new gamejs.Rect(rect);
@@ -75,7 +79,7 @@ Ship.prototype.handle = function(event){
 
   else if (event.type === $e.MOUSE_DOWN){
     this.calculateAngle(event);
-    if (this.weapon === 'rocket') this.shootRockets(event);
+    if (this.weapon === "rocket") this.shootRockets(event);
     else this.firing = true;
   }
 
@@ -114,12 +118,12 @@ Ship.prototype.move = function(){
   var that = this;
 
     if (Math.abs(this.velocity[1]) < this.stats.maxSpeed){
-      if (that.moving === 's') that.velocity[1] += 1;
-      else if (that.moving === 'w') that.velocity[1] -= 1;
+      if (that.moving === "s") that.velocity[1] += 1;
+      else if (that.moving === "w") that.velocity[1] -= 1;
     }
     if (Math.abs(this.velocity[0]) < this.stats.maxSpeed){
-      if (that.moving === 'a') that.velocity[0] -= 1;
-      else if (that.moving === 'd') that.velocity[0] += 1;
+      if (that.moving === "a") that.velocity[0] -= 1;
+      else if (that.moving === "d") that.velocity[0] += 1;
     }
 };
 
@@ -198,7 +202,7 @@ Ship.prototype.shootLasers = function (msDuration){
 
   var that = this;
   if (this.heat > this.stats.maxHeat) this.stats.fireRate = 100;
-  else this.heat += 20;
+  else if (!this.spray) this.heat += 20;
 
   if (this.stats.fireRate < 0){
       var laser = new $laser([50, 5], that);
@@ -225,21 +229,21 @@ Ship.prototype.changeDirection = function(event){
     this.image = gamejs.image.load("./images/Player/ship.png");
 
     if (event.key === $e.K_a) {
-      this.moving = 'a';
+      this.moving = "a";
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/rightShip.png");
     }
     else if (event.key === $e.K_s){
-      this.moving = 's';
+      this.moving = "s";
       this.image = gamejs.image.load("./images/Player/rightShip.png");
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/ship.png");
     } 
     else if (event.key === $e.K_w){
-      this.moving = 'w';
+      this.moving = "w";
       this.image = gamejs.image.load("./images/Player/leftShip.png");
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/ship.png");
     }
     else if (event.key === $e.K_d){
-      this.moving = 'd';
+      this.moving = "d";
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/rightShip.png");
     } 
 
@@ -254,6 +258,7 @@ Ship.prototype.collide = function (){
 
   // Check for collision with projectiles
   var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
+  var powerups = gamejs.sprite.spriteCollide(this, $g.powerups, true);
   if (collide.length > 0){
     this.damage(0.5*this.stats.defense);
     this.velocity[0] = this.velocity[0]/10;
@@ -263,14 +268,33 @@ Ship.prototype.collide = function (){
 
 Ship.prototype.kill = function(){
     // TODO add more stuff when the user dies
-    // alert('You died');
+    // alert("You died");
     location.reload();
 }
 
 Ship.prototype.damage = function(amount){
-  // Reduce health by 'amount' also kill user if health below 0
-  this.health -= amount;
-  if (this.health < 0) this.kill();
+  // Reduce health by "amount" also kill user if health below 0
+  if (!this.invincible){
+    this.health -= amount;
+    if (this.health < 0) this.kill();    
+  }
+}
+
+Ship.prototype.reload = function(){
+  this.rotation = 0;
+  // [x,y]
+  this.pos = [100,100];
+  this.velocity = [0.1,0.1];
+  this.rect.center = [100,100];
+
+  //Angle in radians
+  this.rotation = 0;
+  this.moving = false;
+
+  // Stat related stuff
+  this.health = this.stats.maxHealth;
+  // All dem bullets
+  this.bullets = new gamejs.sprite.Group();
 
 }
 

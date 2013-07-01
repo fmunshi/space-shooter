@@ -1,9 +1,9 @@
-var gamejs = require('gamejs');
-var $g = require('globals');
-var $e = require('gamejs/event');
-var $m = require('gamejs/utils/math');
-var $laser = require('AI/enemyLaser').eLaser;
-var $eShip  = require('AI/enemyShip').eShip;
+var gamejs = require("gamejs");
+var $g = require("globals");
+var $e = require("gamejs/event");
+var $m = require("gamejs/utils/math");
+var $laser = require("AI/enemyLaser").eLaser;
+var $eShip  = require("AI/enemyShip").eShip;
 
 var Explorer = function(rect) {
   // call superconstructor
@@ -15,12 +15,14 @@ var Explorer = function(rect) {
   this.stats = {
     maxSpeed    :   1,
     maxHealth   :   200,
-    maxFireRate :   Math.random()*1000 + 500,
+    maxFireRate :   Math.random()*3000 + 500,
     accuracy    :   0,
     luck        :   0,
     damage      :   100
   };
 
+  this.health = this.stats.maxHealth;
+  
   return this;
 };
 gamejs.utils.objects.extend(Explorer, $eShip);

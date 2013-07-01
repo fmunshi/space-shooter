@@ -1,6 +1,6 @@
-var gamejs = require('gamejs');
-var $m = require('gamejs/utils/math');
-var $g = require('globals');
+var gamejs = require("gamejs");
+var $m = require("gamejs/utils/math");
+var $g = require("globals");
 
 
 var Laser = function (rect, ship) {

@@ -1,9 +1,9 @@
-var gamejs = require('gamejs');
-var $g = require('globals');
-var $e = require('gamejs/event');
-var $m = require('gamejs/utils/math');
-var $laser = require('AI/enemyLaser').eLaser;
-var $eShip  = require('AI/enemyShip').eShip;
+var gamejs = require("gamejs");
+var $g = require("globals");
+var $e = require("gamejs/event");
+var $m = require("gamejs/utils/math");
+var $laser = require("AI/enemyLaser").eLaser;
+var $eShip  = require("AI/enemyShip").eShip;
 
 var Boss = function(rect) {
   // call superconstructor
@@ -13,13 +13,14 @@ var Boss = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
 
   this.stats = {
-    maxSpeed    :   5,
+    maxSpeed    :   1,
     maxHealth   :   2000,
-    maxFireRate :   Math.random()*1000 + 500,
+    maxFireRate :   Math.random()*1000,
     accuracy    :   0,
     luck        :   0,
     damage      :   100
   };
+  this.health = this.stats.maxHealth;
 
   this.setVelocity();
 

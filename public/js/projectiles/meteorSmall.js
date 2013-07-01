@@ -3,11 +3,11 @@ var $m = require("gamejs/utils/math");
 var $projectile = require("projectiles/projectile").Projectile;
 var $g = require("globals");
 
-var Meteor = function (rect){
+var MeteorSmall = function (rect){
 
-  Meteor.superConstructor.apply(this, arguments);
+  MeteorSmall.superConstructor.apply(this, arguments);
 
-  this.image = gamejs.image.load("./images/Map/meteor.png");
+  this.image = gamejs.image.load("./images/Map/meteorSmall.png");
   this.originalImage = gamejs.transform.scale(this.image, rect);
   this.image = gamejs.transform.rotate(this.originalImage, Math.random()*360);
 
@@ -18,6 +18,6 @@ var Meteor = function (rect){
 
   return this;
 };
-gamejs.utils.objects.extend(Meteor, $projectile);
+gamejs.utils.objects.extend(MeteorSmall, $projectile);
 
-exports.Meteor = Meteor;
+exports.MeteorSmall = MeteorSmall;

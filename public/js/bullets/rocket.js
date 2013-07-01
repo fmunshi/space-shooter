@@ -1,7 +1,7 @@
-var gamejs = require('gamejs');
-var $m = require('gamejs/utils/math');
-var $laser = require('bullets/laser').Laser;
-var $g = require('globals')
+var gamejs = require("gamejs");
+var $m = require("gamejs/utils/math");
+var $laser = require("bullets/laser").Laser;
+var $g = require("globals")
 
 var Rocket = function(rect, ship, pos) {
   // call superconstructor
@@ -32,16 +32,16 @@ Rocket.prototype.kill = function(){
   var that = this;
   var newRocket = new Rocket([250, 250], that.ship, that.pos);
 
-  var collided = gamejs.sprite.spriteCollide(newRocket, $g.projectiles, true);
-  var eCollided = gamejs.sprite.spriteCollide(newRocket, $g.eShips, true);
+  var collided = gamejs.sprite.spriteCollide(newRocket, $g.projectiles, false);
+  var eCollided = gamejs.sprite.spriteCollide(newRocket, $g.eShips, false);
+
   collided.forEach(function(proj){
     proj.kill();
   });
-  eCollided.forEach(function(eShip){
-    eShip.damage(this.damage);
-  });
 
-  
+  eCollided.forEach(function(eShip){
+    eShip.damage(that.damage);
+  });
 
   this.ship.bullets.remove(this);
   this.velocity = [0,0];

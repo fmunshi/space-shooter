@@ -1,8 +1,7 @@
-var gamejs = require('gamejs');
-var $m = require('gamejs/utils/math');
-var $laser = require('bullets/laser').Laser;
-var $g = require('globals');
-var Space = require('space').Space;
+var gamejs = require("gamejs");
+var $m = require("gamejs/utils/math");
+var $laser = require("bullets/laser").Laser;
+var $g = require("globals");
 
 var eLaser = function (rect, ship) {
 	// call superconstructor

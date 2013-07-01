@@ -1,17 +1,18 @@
-var gamejs = require('gamejs');
-var $g = require('globals');
-var $m = require('gamejs/utils/math');
+var gamejs = require("gamejs");
+var $g = require("globals");
+var $m = require("gamejs/utils/math");
+var $powerup = require("powerups").Powerup;
 
 //General Projectile class
 
-var Projectile =  function() {
+var Projectile =  function(rect) {
   // call superconstructor
   Projectile.superConstructor.apply(this, arguments);
-  this.size = Math.random()*30;
+  this.size = rect[0];
   this.angle = Math.random()*360;
 
   this.velocity = [-(Math.random()*10), 0];
-  this.rect = new gamejs.Rect([this.size, this.size]);
+  this.rect = new gamejs.Rect(rect);
   this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
   this.rect.center = this.pos;
 
@@ -36,7 +37,8 @@ Projectile.prototype.checkbounds = function(){
 };
 
 Projectile.prototype.kill = function (){
+  var powerup = new $powerup(this.rect.center);
   this.velocity = [-(Math.random()*5 + 2), 0];
-  this.rect.center = this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
+  this.rect.center = this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
 }
 exports.Projectile = Projectile;
