@@ -26,6 +26,7 @@ Projectile.prototype.update = function (msDuration){
   this.checkbounds();
   this.rect.width = this.size+30;
   this.rect.height = this.size+30;
+  this.collide();
 
 };
 
@@ -40,5 +41,13 @@ Projectile.prototype.kill = function (){
   var powerup = new $powerup(this.rect.center);
   this.velocity = [-(Math.random()*5 + 2), 0];
   this.rect.center = this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
+}
+
+Projectile.prototype.collide = function(){
+  var that = this;
+  var collide = gamejs.sprite.spriteCollide(this, $g.projectiles, false);
+  collide.forEach(function(collision){
+    if (that.size < collision.size) that.kill();
+  });
 }
 exports.Projectile = Projectile;

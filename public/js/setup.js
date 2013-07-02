@@ -54,10 +54,11 @@ exports.map = function(){
 
 
 exports.increaseLevel = function(){
+
   $g.time = 0;
-  $g.stars = [];
   $g.projectiles = new gamejs.sprite.Group();
   $g.eShips = new gamejs.sprite.Group();
+  $g.powerups = new gamejs.sprite.Group();
 
   $g.level.number += 1;
 
@@ -73,10 +74,9 @@ exports.increaseLevel = function(){
   if ($g.level.number%5 === 0) $g.level.maxRaiders += 1;
   if ($g.level.number%5 === 0) $g.level.boss = true;
   else $g.level.boss = false;
-
-  // alert($g.level.number);
+  
   $g.ship.reload();
-  setTimeout(createEnemies(), 1000);  
+  createEnemies();
 };
 
 

@@ -52,11 +52,6 @@ exports.calcVelocity = function (msDuration, velocity){
 
 
 
-
-
-
-
-
 var fonts = exports.fonts = {
     big: new gamejs.font.Font("64px Aller"),
     small: new gamejs.font.Font("24px Aller"),

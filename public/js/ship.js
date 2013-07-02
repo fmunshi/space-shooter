@@ -135,12 +135,12 @@ Ship.prototype.move = function(){
 };
 
 Ship.prototype.decelerate = function(velocity){
-  if (this.velocity[0] < 1 && this.velocity > -1) this.velocity[0] = 0;
-  if (this.velocity[1] < 1 && this.velocity > -1) this.velocity[1] = 0;
-  if (this.velocity[0] > 0) { this.velocity[0] -= this.velocity[0]/10; }
-  if (this.velocity[0] < 0) { this.velocity[0] -= this.velocity[0]/10; }
-  if (this.velocity[1] > 0) { this.velocity[1] -= this.velocity[1]/10; }
-  if (this.velocity[1] < 0) { this.velocity[1] -= this.velocity[1]/10; }
+  if (this.velocity[0] < 1 && this.velocity > -1)       this.velocity[0] = 0;
+  if (this.velocity[1] < 1 && this.velocity > -1)       this.velocity[1] = 0;
+  if (this.velocity[0] > 0)                             this.velocity[0] -= this.velocity[0]/10;
+  else if (this.velocity[0] < 0)                        this.velocity[0] -= this.velocity[0]/10;
+  if (this.velocity[1] > 0)                             this.velocity[1] -= this.velocity[1]/10;
+  else if (this.velocity[1] < 0)                        this.velocity[1] -= this.velocity[1]/10;
   if (this.velocity[0] === 0 && this.velocity[1] === 0) this.image = gamejs.image.load("./images/Player/ship.png");
 };
 
@@ -148,13 +148,13 @@ Ship.prototype.checkbounds = function(){
     // Check if user is out of bounds of the screen
 
     // Left
-    if (this.pos[0] < 0) { this.pos[0] = $g.game.screenSize[0]-100; }
+    if (this.pos[0] < 0)                          this.pos[0] = $g.game.screenSize[0]-100;
     // Right
-    if (this.pos[0] > $g.game.screenSize[0]-10) { this.pos[0] = 0; }
+    if (this.pos[0] > $g.game.screenSize[0]-10)   this.pos[0] = 0; 
     // Bottom
-    if (this.pos[1] < 10) { this.pos[1] = $g.game.screenSize[1]-10; }
+    if (this.pos[1] < 10)                         this.pos[1] = $g.game.screenSize[1]-10;
     // Top
-    if (this.pos[1] > $g.game.screenSize[1]) { this.pos[1] = 0; }
+    if (this.pos[1] > $g.game.screenSize[1])      this.pos[1] = 0;
 };
 
 
@@ -172,9 +172,9 @@ Ship.prototype.calculateAngle = function (pos){
       angle = $m.degrees(angle);
 
   // Quadrant Two
-  if ((dX < 0) && (dY < 0)) angle -= 180;
+  if ((dX < 0) && (dY < 0))       angle -= 180;
   // Quadrant Three
-  else if ((dX < 0) && (dY > 0)) angle += 180;
+  else if ((dX < 0) && (dY > 0))  angle += 180;
 
   this.rotation = $m.radians(angle);
   this.image = gamejs.transform.rotate(this.originalImage, angle+90);
@@ -208,8 +208,8 @@ Ship.prototype.shootLasers = function (msDuration){
   // Shoot lasers while mouse is down, stop if heat is maxed out
 
   var that = this;
-  if (this.heat > this.stats.maxHeat) this.stats.fireRate = 100;
-  else if (!this.spray) this.heat += 20;
+  if (this.heat > this.stats.maxHeat)   this.stats.fireRate = 100;
+  else if (!this.spray)                 this.heat += 20;
 
   if (this.stats.fireRate < 0){
       var laser = new $laser([50, 5], that);
@@ -318,17 +318,11 @@ Ship.prototype.addExp = function(amount){
     this.stats.maxHealth += 10;
     this.stats.maxHeat += 10;
 
-    if (this.level%2 === 0){
-      this.stats.defense += 10;
-    }
+    if (this.level%2 === 0)   this.stats.defense += 10;
 
-    if (this.level%3 === 0){
-      this.stats.damage += 10;
-    }
+    if (this.level%3 === 0)   this.stats.damage += 10;
 
-    if (this.level%5 === 0){
-      this.stats.luck += 0.01
-    }
+    if (this.level%5 === 0)   this.stats.luck += 0.01
 
     console.warn(this.stats)
   }

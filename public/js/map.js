@@ -57,8 +57,9 @@ var drawStars = exports.drawStars = function (display, msDuration){
 
 var drawHealth = exports.drawHealth = function(display){
 
-  display.blit($g.fonts.small.render("Level: "+$g.level.number, "#999"), [50, $g.game.screenSize[1]-100]);
-  display.blit($g.fonts.small.render("Score: "+$g.score, "#999"), [50, $g.game.screenSize[1]-150]);
+  display.blit($g.fonts.small.render("Wave: "+$g.level.number, "#999"), [50, $g.game.screenSize[1]-100]);
+  display.blit($g.fonts.small.render("Score: "+$g.score, "#999"), [50, $g.game.screenSize[1]-130]);
+  display.blit($g.fonts.small.render("Level: "+$g.ship.level, "#999"), [50, $g.game.screenSize[1]-160]);
 
   if ($g.ship.invincible){
       var bg = new gamejs.Surface($g.game.screenSize);
