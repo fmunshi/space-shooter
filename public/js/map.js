@@ -95,10 +95,9 @@ var drawScore = exports.drawScore = function(display){
     display.blit($g.fonts.small.render('Score', '#FFFFFF'), [$g.game.screenSize[0] / 2 - 150, $g.game.screenSize[1] / 2 - 36]);
     display.blit($g.fonts.small.render('Level', '#FFFFFF'), [$g.game.screenSize[0] / 2 - 150, $g.game.screenSize[1] / 2]);
     display.blit($g.fonts.small.render('Time', '#FFFFFF'), [$g.game.screenSize[0] / 2 - 150, $g.game.screenSize[1] / 2 + 36]);
-    // display.blit($g.fonts.small.render('TOTAL', '#FFFFFF'), [$g.game.screenSize[0] / 2 - 150, $g.game.screenSize[1] / 2 + 108]);
 
     display.blit($g.fonts.small.render($g.score, '#FFFFFF'), [$g.game.screenSize[0] / 2 + 125, $g.game.screenSize[1] / 2 - 36]);
     display.blit($g.fonts.small.render($g.level.number, '#FFFFFF'), [$g.game.screenSize[0] / 2 + 125, $g.game.screenSize[1] / 2]);
-    display.blit($g.fonts.small.render(($g.totalTime / 1000) + 's', '#FFFFFF'), [$g.game.screenSize[0] / 2 + 125, $g.game.screenSize[1] / 2 + 36]);
-    // display.blit($g.fonts.small.render(total, '#FFFFFF'), [$g.game.screenSize[0] / 2 + 125, $g.game.screenSize[1] / 2 + 108]);
+    display.blit($g.fonts.small.render((Math.round($g.totalTime / 1000)) + 's', '#FFFFFF'), [$g.game.screenSize[0] / 2 + 125, $g.game.screenSize[1] / 2 + 36]);
+
 }
