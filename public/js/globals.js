@@ -23,6 +23,8 @@ exports.level = {
 
 exports.time = 0;
 
+exports.powerup = false;
+
 exports.totalTime = 0;
 
 exports.mouse = [0,0];

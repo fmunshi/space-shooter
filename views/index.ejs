@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Set Apple icons for when prototype is saved to home screen -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icons/apple-touch-icon-57x57.png">
+
     <title>GameJS Application</title>
     <!-- Styling -->
     <link rel="stylesheet" type="text/css" href="style/app.css">
@@ -14,8 +28,6 @@
 
 </head>
 <body>
-
-
     <script>
         $(document).ready(function(){
             require.setModuleRoot("js/");
@@ -32,16 +44,12 @@
             });
         });
     </script>
-
     <canvas style = 'display:none;' id="gjs-canvas"></canvas>
 
     <div class="container">
 
         <div class = 'hero-unit'>
             <br><br><br>
-<!--             <h1 class="text-center">
-                Space
-            </h1> -->
         </div>
 
         <center class = 'play' >
@@ -114,6 +122,15 @@
 
                             <td class = 'right'>
                                 Aim
+                            </td>
+                            
+                        </tr>
+
+                        <tr>
+                            <td class = 'left'> P </td> 
+
+                            <td class = 'right'>
+                                Pause [any key to unpause]
                             </td>
                             
                         </tr>

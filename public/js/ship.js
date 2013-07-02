@@ -291,9 +291,9 @@ Ship.prototype.damage = function(amount){
 Ship.prototype.reload = function(){
   this.rotation = 0;
   // [x,y]
-  this.pos = [100,100];
-  this.velocity = [0.1,0.1];
-  this.rect.center = [100,100];
+  // this.pos = [100,100];
+  // this.velocity = [0.1,0.1];
+  // this.rect.center = [100,100];
 
   //Angle in radians
   this.rotation = 0;
@@ -307,11 +307,11 @@ Ship.prototype.reload = function(){
 }
 
 Ship.prototype.addExp = function(amount){
-  this.exp += amount; 
+  this.exp += amount;
   if (this.exp > this.stats.exp){
     this.exp = this.exp - this.stats.exp;
     this.level += 1;
-    this.stats.exp += 10*this.level;
+    this.stats.exp += this.level*this.level;
 
     console.log('LEVELED UP TO: '+this.level);
     

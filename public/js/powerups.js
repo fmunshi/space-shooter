@@ -1,5 +1,6 @@
 var gamejs = require("gamejs");
 var $g = require("globals");
+var $powerText = require("animations/powerup").Powerup;
 
 //General Powerup class
 
@@ -39,14 +40,14 @@ var Powerup =  function(pos) {
 gamejs.utils.objects.extend(Powerup, gamejs.sprite.Sprite);
 
 Powerup.prototype.update = function(msDuration){
-  this.rect.moveIp([-5,0]);
+  this.rect.moveIp([-10,0]);
 }
 
 
 Powerup.prototype.kill = function (){
   switch (this.index) {
     case 0:
-
+      $g.powerup = new $powerText('DOUBLE DAMAGE');
       $g.ship.stats.damage *= 2;
       setTimeout(function(){
         $g.ship.stats.damage *= 0.5;
@@ -56,12 +57,13 @@ Powerup.prototype.kill = function (){
       break;
 
     case 1:
-
+      $g.powerup = new $powerText('DOUBLE DAMAGE');
       $g.ship.health = $g.ship.stats.maxHealth;
       // Health refill
       break;
 
     case 2:
+      $g.powerup = new $powerText('DOUBLE DAMAGE');
       $g.ship.invincible = true;
       setTimeout(function(){
         $g.ship.invincible = false;
@@ -71,6 +73,7 @@ Powerup.prototype.kill = function (){
 
     case 3:
       // kill
+      $g.powerup = new $powerText('DOUBLE DAMAGE');
       $g.eShips.forEach(function(ship){
         ship.kill();
         $g.ship.addExp(ship.exp);
@@ -84,6 +87,7 @@ Powerup.prototype.kill = function (){
       break;
     case 4:
     // spray
+      $g.powerup = new $powerText('DOUBLE DAMAGE');
       $g.ship.spray = true;
       setTimeout(function(){
         $g.ship.spray = false;

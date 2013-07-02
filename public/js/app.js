@@ -44,6 +44,8 @@ gamejs.ready(function() {
 
             display.fill("#20102F");
 
+            if ($g.powerup) $g.powerup.render(display, msDuration);
+            
             ship.update(msDuration);
             ship.draw(display);
 

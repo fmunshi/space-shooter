@@ -58,7 +58,7 @@ Laser.prototype.increaseSize = function(){
 Laser.prototype.checkbounds = function(){
   var that = this;
     this.pos = this.rect.center;
-    if ( (this.pos[0] < - 150) || (this.pos[0] > $g.game.screenSize[0] + 100) || (this.pos[1] < -100) || (this.pos[1] > $g.game.screenSize[1] + 100) )  { 
+    if ( (this.pos[0] < - 10) || (this.pos[0] > $g.game.screenSize[0]/1.1) || (this.pos[1] < -100) || (this.pos[1] > $g.game.screenSize[1] + 100) )  { 
       this.kill();
     }
 };
