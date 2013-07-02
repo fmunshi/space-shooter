@@ -48,34 +48,8 @@ exports.calcVelocity = function (msDuration, velocity){
   return newVelocity;
 }
 
-
-
-
-
-var fonts = exports.fonts = {
+exports.fonts = {
     big: new gamejs.font.Font("64px Aller"),
     small: new gamejs.font.Font("24px Aller"),
     mini: new gamejs.font.Font("14px Aller")
-};
-
-
-exports.surfaces = {
-  // fullscreen: new gamejs.Surface($g.game.screenSize),
-  // levelDuration: new gamejs.Surface([$g.game.screenSize[0] - 20, 12]),
-  // lifes: new gamejs.Surface([40 * $g.player.defaultLifes, 27]),
-  forkPower: new gamejs.Surface([185, 16]),
-  stashing: new gamejs.Surface([100, 71]),
-  bossLife: new gamejs.Surface([185, 16])
-}
-
-exports.texts = {
-  bossLife: fonts.mini.render("Boss Life", "#FFFFFF"),
-  forkPower: fonts.mini.render("Fork Power", "#FFFFFF"),
-  // powerups
-  branching: fonts.small.render("Branch your lasers!", "#FFFFFF"),
-  cloning:   fonts.small.render("Clone a new life!", "#FFFFFF"),
-  forking:   fonts.small.render("Fork your power!", "#FFFFFF"),
-  pulling:   fonts.small.render("Pull new powers!", "#FFFFFF"),
-  pushing:   fonts.small.render("Push your enemies!", "#FFFFFF"),
-  stashing:  fonts.small.render("Stashing a new Misil!", "#FFFFFF")
 };
