@@ -5,6 +5,7 @@ body {
 }
 .hero-unit {
   padding: 100px!important;
+  /*background: #20102F!important;*/
   background: #20102F url('./../images/screen.png')!important;
   background-position:-100px -120px!important; 
 

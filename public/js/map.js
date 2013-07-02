@@ -6,17 +6,15 @@ var gamejs = require("gamejs");
 var Star = exports.Star =  function() {
   // call superconstructor
   Star.superConstructor.apply(this, arguments);
-  this.size = Math.random()*20;
+  this.size = 15;
   this.angle = Math.random()*360;
 
-  if (Math.random() < 0.5) this.speedY = 0;
-  else this.speedY = 0;
-
-  this.speedX = -(Math.random()*5 + 5);
+  this.speedX = -10*Math.random() - 5;
+  this.speedY = 0;
 
   this.image = gamejs.image.load("./images/Map/star.png");
   this.originalImage = gamejs.transform.scale(this.image, [this.size, this.size] );
-  this.image = gamejs.transform.rotate(this.originalImage, this.angle);
+  this.image = gamejs.transform.rotate(this.originalImage, Math.random()*360);
   
   this.velocity = [this.speedX, this.speedY];
   this.rect = new gamejs.Rect([this.size, this.size]);

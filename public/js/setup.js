@@ -56,6 +56,7 @@ exports.map = function(){
 exports.increaseLevel = function(){
 
   $g.time = 0;
+  $g.stars = [];
   $g.projectiles = new gamejs.sprite.Group();
   $g.eShips = new gamejs.sprite.Group();
   $g.powerups = new gamejs.sprite.Group();
@@ -88,38 +89,36 @@ var createEnemies = function(){
       var star = new $map.Star();
       $g.stars.push(star);
     }
+    for (var i = 0; i < $g.level.maxMeteors; i++){
+        var sizeL = Math.random()*100 + 50;
+        var sizeS = Math.random()*25 + 50;
+        var meteor = new $meteor([sizeL,sizeL]);
+        var meteorSmall = new $meteorSmall([sizeS,sizeS]);
+        $g.projectiles.add(meteor);
+        $g.projectiles.add(meteorSmall);
+    }
+
+    if ($g.level.boss){
+      setTimeout(function(){
+        var boss = new $boss([200,200]);
+        $g.eShips.add(boss);
+      }, $g.level.time-10000);
+    }
+
+      for (var i = 0; i < $g.level.maxUFOs; i++){
+        var ufo = new $ufo([20,20]);
+        $g.eShips.add(ufo);
+    }
+
+      for (var i = 0; i < $g.level.maxRaiders; i++){
+        var raider = new $raider([60,60]);
+        $g.eShips.add(raider);
+    }
+
+      for (var i = 0; i < $g.level.maxExplorers; i++){
+        var explorer = new $explorer([80,80]);
+        $g.eShips.add(explorer);
+    }
   }, 1000);
-
-  
-  for (var i = 0; i < $g.level.maxMeteors; i++){
-      var sizeL = Math.random()*100 + 50;
-      var sizeS = Math.random()*25 + 50;
-      var meteor = new $meteor([sizeL,sizeL]);
-      var meteorSmall = new $meteorSmall([sizeS,sizeS]);
-      $g.projectiles.add(meteor);
-      $g.projectiles.add(meteorSmall);
-  }
-
-  if ($g.level.boss){
-    setTimeout(function(){
-      var boss = new $boss([200,200]);
-      $g.eShips.add(boss);
-    }, $g.level.time-10000);
-  }
-
-    for (var i = 0; i < $g.level.maxUFOs; i++){
-      var ufo = new $ufo([20,20]);
-      $g.eShips.add(ufo);
-  }
-
-    for (var i = 0; i < $g.level.maxRaiders; i++){
-      var raider = new $raider([60,60]);
-      $g.eShips.add(raider);
-  }
-
-    for (var i = 0; i < $g.level.maxExplorers; i++){
-      var explorer = new $explorer([80,80]);
-      $g.eShips.add(explorer);
-  }
 
 };
