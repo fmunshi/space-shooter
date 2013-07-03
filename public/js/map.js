@@ -9,7 +9,7 @@ var Star = exports.Star =  function() {
   this.size = 15;
   this.angle = Math.random()*360;
 
-  this.speedX = -10*Math.random() - 5;
+  this.speedX = -10;
   this.speedY = 0;
 
   this.image = gamejs.image.load("./images/Map/star.png");
@@ -18,7 +18,7 @@ var Star = exports.Star =  function() {
   
   this.velocity = [this.speedX, this.speedY];
   this.rect = new gamejs.Rect([this.size, this.size]);
-  this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
+  this.pos = [$g.game.screenSize[0]*Math.random(), Math.random()*$g.game.screenSize[1]];
   this.rect.center = this.pos;
 
   return this;

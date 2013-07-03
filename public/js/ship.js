@@ -44,7 +44,8 @@ var Ship = function(rect) {
   this.weapon = "rocket";   // Default weapon is rocket
   this.firing = false;      // For shooting lasers
   this.shooting = false;    // For loading rockets
-  this.moving = false;
+  this.xmove = 0;
+  this.ymove = 0;
 
   // Rect stuff
   this.rect = new gamejs.Rect(rect);
@@ -64,7 +65,7 @@ Ship.prototype.update = function(msDuration) {
 
   if (this.heat > 0) this.heat -= 10;
   if (this.firing) this.shootLasers(msDuration);
-  if (this.moving) this.move();
+  this.move();
 
   this.bullets.update(msDuration);
   this.collide();
@@ -98,7 +99,26 @@ Ship.prototype.handle = function(event){
   }
 
   else if (event.type == $e.KEY_UP){
-    if (event.key === $e.K_a || event.key === $e.K_s || event.key === $e.K_w || event.key === $e.K_d) this.moving = false;
+    if (event.key === $e.K_a) {
+      if(this.xmove === 1) {
+        this.xmove = 0;
+      }
+    }
+    else if (event.key === $e.K_s){
+      if(this.ymove === 1) {
+        this.ymove = 0;
+      }
+    } 
+    else if (event.key === $e.K_w){
+      if(this.ymove === -1) {
+        this.ymove = 0;
+      }
+    }
+    else if (event.key === $e.K_d){
+      if(this.xmove === -1) {
+        this.xmove = 0;
+      }
+    } 
   }
 
   else if (event.type === gamejs.event.MOUSE_UP) {
@@ -123,14 +143,11 @@ Ship.prototype.moveIp = function(velocity){
 
 Ship.prototype.move = function(){
   var that = this;
-
     if (Math.abs(this.velocity[1]) < this.stats.maxSpeed){
-      if (that.moving === "s") that.velocity[1] += 1;
-      else if (that.moving === "w") that.velocity[1] -= 1;
+      that.velocity[1] += that.ymove;
     }
     if (Math.abs(this.velocity[0]) < this.stats.maxSpeed){
-      if (that.moving === "a") that.velocity[0] -= 1;
-      else if (that.moving === "d") that.velocity[0] += 1;
+      that.velocity[0] -= that.xmove;
     }
 };
 
@@ -236,21 +253,21 @@ Ship.prototype.changeDirection = function(event){
     this.image = gamejs.image.load("./images/Player/ship.png");
 
     if (event.key === $e.K_a) {
-      this.moving = "a";
+      this.xmove = 1;
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/rightShip.png");
     }
     else if (event.key === $e.K_s){
-      this.moving = "s";
+      this.ymove = 1;
       this.image = gamejs.image.load("./images/Player/rightShip.png");
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/ship.png");
     } 
     else if (event.key === $e.K_w){
-      this.moving = "w";
+      this.ymove = -1;
       this.image = gamejs.image.load("./images/Player/leftShip.png");
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/ship.png");
     }
     else if (event.key === $e.K_d){
-      this.moving = "d";
+      this.xmove = -1;
       if (Math.abs(angle) > 50) this.image = gamejs.image.load("./images/Player/rightShip.png");
     } 
 
