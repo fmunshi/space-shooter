@@ -5,8 +5,6 @@ var $m = require("gamejs/utils/math");
 var $rocket = require("bullets/rocket").Rocket;
 var $laser = require("bullets/laser").Laser;
 
-gamejs.preload(["./images/Player/ship.png"]);
-
 var Ship = function(rect) {
   // call superconstructor
   Ship.superConstructor.apply(this, arguments);

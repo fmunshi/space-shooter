@@ -9,6 +9,37 @@ var $http = require("gamejs/http");
 // Preload all images
 $setup.images();
 
+gamejs.preload(["./images/Player/ship.png"]);
+gamejs.preload(["./images/Player/rightShip.png"]);
+gamejs.preload(["./images/Player/leftShip.png"]);
+
+
+gamejs.preload(["./images/Player/rocket.png"]);
+gamejs.preload(["./images/Player/laser.png"]);
+
+gamejs.preload(["./images/Map/star.png"]);
+gamejs.preload(["./images/Map/meteor.png"]);
+gamejs.preload(["./images/Map/meteorSmall.png"]);
+gamejs.preload(["./images/Map/boom.png"]);
+
+//ENEMIES
+
+gamejs.preload(["./images/Enemies/laser.png"]);
+
+gamejs.preload(["./images/Enemies/boss.png"]);
+gamejs.preload(["./images/Enemies/ufo.png"]);
+gamejs.preload(["./images/Enemies/explorer.png"]);
+gamejs.preload(["./images/Enemies/heavyExplorer.png"]);
+gamejs.preload(["./images/Enemies/darkExplorer.png"]);
+gamejs.preload(["./images/Enemies/heavyRaider.png"]);
+gamejs.preload(["./images/Enemies/raider.png"]);
+
+gamejs.preload(["./images/Powerups/damage.png"]);
+gamejs.preload(["./images/Powerups/health.png"]);
+gamejs.preload(["./images/Powerups/invincible.png"]);
+gamejs.preload(["./images/Powerups/kill.png"]);
+gamejs.preload(["./images/Powerups/spray.png"]);
+
 gamejs.ready(function() {
 
     $setup.map();
