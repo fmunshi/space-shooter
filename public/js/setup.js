@@ -85,7 +85,7 @@ var createEnemies = function(){
 
   
   setTimeout(function(){
-    for (var i = 0; i < 10; i++){
+    for (var i = 0; i < 20; i++){
       var star = new $map.Star();
       $g.stars.push(star);
     }
