@@ -86,14 +86,13 @@ Ship.prototype.handle = function(event){
 
   else if (event.type === $e.MOUSE_DOWN){
     $g.mouse = event.pos;
-    if (this.weapon === "rocket") this.shootRockets(event);
-    else this.firing = true;
+    // if (this.weapon === "rocket") this.shootRockets(event);
+    this.firing = true;
   }
 
   else if (event.type === $e.KEY_DOWN) {
-    if (event.key === $e.K_SHIFT){
-      this.switchWeapon();
-    }
+    // if (event.key === $e.K_SHIFT) this.switchWeapon();
+    if (event.key === $e.K_SPACE) this.shootRockets(event);
     this.changeDirection(event);
   }
 
@@ -111,7 +110,6 @@ Ship.prototype.draw = function (display){
   display.blit(this.image, this.rect);
   this.bullets.draw(display);
 };
-
 
 
 //MOVING STUFF
@@ -322,7 +320,7 @@ Ship.prototype.addExp = function(amount){
 
     if (this.level%3 === 0)   this.stats.damage += 10;
 
-    if (this.level%5 === 0)   this.stats.luck += 0.01
+    if (this.level%5 === 0 && this.stats.luck < 0.2)   this.stats.luck += 0.01;
 
     console.warn(this.stats)
   }

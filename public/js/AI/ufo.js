@@ -14,11 +14,11 @@ var ufo = function(rect) {
 
   this.stats = {
     maxSpeed    :   20,
-    maxHealth   :   10,
-    maxFireRate :   Math.random()*1000 + 500,
+    maxHealth   :   10 + $g.level.number*10,
+    maxFireRate :   Math.abs(Math.random()*1000 + 500 - $g.level.number*100),
     accuracy    :   0,
     luck        :   0,
-    damage      :   100
+    damage      :   100 + $g.level.number*10
   };
 
   this.exp = 5;

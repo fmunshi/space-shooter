@@ -47,8 +47,14 @@ eLaser.prototype.update = function (msDuration){
 };
 
 eLaser.prototype.collide = function (){
-  var collided = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
-  if (collided.length > 0) this.kill();
+  var that = this;
+  var collided = gamejs.sprite.spriteCollide(this, $g.projectiles, false);
+  if (collided.length > 0){
+    this.kill();
+    collided.forEach(function(proj){
+      proj.damage(that.damage);
+    });
+  } 
 }
 
 exports.eLaser = eLaser;

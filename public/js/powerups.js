@@ -34,6 +34,9 @@ var Powerup =  function(pos) {
     setTimeout(function(){
       $g.powerups.remove(that);
     }, 3000);
+
+    if ($g.powerups.length() > 5) $g.powerups.shift();
+
   }
 };
 

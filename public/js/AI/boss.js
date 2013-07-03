@@ -14,11 +14,11 @@ var Boss = function(rect) {
 
   this.stats = {
     maxSpeed    :   1,
-    maxHealth   :   2000,
-    maxFireRate :   Math.random()*1000,
+    maxHealth   :   2000 + $g.level.number*20,
+    maxFireRate :   Math.random()*1000 + 100 - $g.level.number*10,
     accuracy    :   0,
     luck        :   0,
-    damage      :   100
+    damage      :   100 + $g.level.number*10
   };
 
   this.exp = 100;

@@ -65,9 +65,14 @@ Laser.prototype.checkbounds = function(){
 
 Laser.prototype.collide = function (){
 	var that = this;
-  var collided = gamejs.sprite.spriteCollide(this, $g.projectiles, true);
+  var collided = gamejs.sprite.spriteCollide(this, $g.projectiles, false);
   var eCollided = gamejs.sprite.spriteCollide(this, $g.eShips, false);
-  if (collided.length > 0) this.kill();
+  if (collided.length > 0) {
+    this.kill();
+    collided.forEach(function(proj){
+      proj.damage(that.damage);
+    });
+  }
   if (eCollided.length > 0){
     this.kill();
     eCollided.forEach(function(eShip){

@@ -36,7 +36,7 @@ Rocket.prototype.kill = function(){
   var eCollided = gamejs.sprite.spriteCollide(newRocket, $g.eShips, false);
 
   collided.forEach(function(proj){
-    proj.kill();
+    proj.damage(that.damage);
   });
 
   eCollided.forEach(function(eShip){

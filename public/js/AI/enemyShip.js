@@ -22,11 +22,11 @@ var eShip = function(rect) {
 
   this.stats = {
     maxSpeed    :   15,
-    maxHealth   :   200,
-    maxFireRate :   Math.random()*1000 + 500,
+    maxHealth   :   200 + $g.level.number*5,
+    maxFireRate :   Math.random()*1000 + 500 - $g.level.number*5,
     accuracy    :   0,
     luck        :   0,
-    damage      :   10
+    damage      :   10 + $g.level.number*1
   };
 
   this.exp = 10;

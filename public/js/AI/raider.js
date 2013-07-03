@@ -14,11 +14,11 @@ var Raider = function(rect) {
 
   this.stats = {
     maxSpeed    :   15,
-    maxHealth   :   300,
-    maxFireRate :   Math.random()*1000 + 500,
+    maxHealth   :   300 + $g.level.number*10,
+    maxFireRate :   Math.abs(Math.random()*1000 + 500 - $g.level.number*20),
     accuracy    :   0,
     luck        :   0,
-    damage      :   100
+    damage      :   100 + $g.level.number*10
   };
 
   this.exp = 20;

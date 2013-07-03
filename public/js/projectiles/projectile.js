@@ -8,6 +8,12 @@ var $powerup = require("powerups").Powerup;
 var Projectile =  function(rect) {
   // call superconstructor
   Projectile.superConstructor.apply(this, arguments);
+
+
+  this.image = gamejs.image.load("./images/Map/meteor.png");
+  this.originalImage = gamejs.transform.scale(this.image, rect);
+  this.image = gamejs.transform.rotate(this.originalImage, Math.random()*360);
+
   this.size = rect[0];
   this.angle = Math.random()*360;
 
@@ -15,12 +21,15 @@ var Projectile =  function(rect) {
   this.rect = new gamejs.Rect(rect);
   this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
   this.rect.center = this.pos;
+  this.maxHealth = 100 + $g.level.number*20;
+  this.health = this.maxHealth;
 
   return this;
 };
 gamejs.utils.objects.extend(Projectile, gamejs.sprite.Sprite);
 
 Projectile.prototype.update = function (msDuration){
+
   var velocity = $g.calcVelocity(msDuration, this.velocity);
   this.rect.moveIp(velocity);
   this.checkbounds();
@@ -38,6 +47,7 @@ Projectile.prototype.checkbounds = function(){
 };
 
 Projectile.prototype.kill = function (){
+  this.health = this.maxHealth;
   var powerup = new $powerup(this.rect.center);
   this.velocity = [-(Math.random()*5 + 2), 0];
   this.rect.center = this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
@@ -49,5 +59,12 @@ Projectile.prototype.collide = function(){
   collide.forEach(function(collision){
     if (that.size < collision.size) that.kill();
   });
+}
+
+Projectile.prototype.damage = function(damage){
+  this.health -= Math.abs(damage);
+  
+  if (this.health <= 0) this.kill();
+  else if (this.health > this.maxHealth/2) this.image.setAlpha(1-this.health/this.maxHealth);
 }
 exports.Projectile = Projectile;
