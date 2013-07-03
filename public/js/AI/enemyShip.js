@@ -31,7 +31,7 @@ var eShip = function(rect) {
 
   this.exp = 10;
 
-  this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
+  this.velocity = [-(Math.random()*this.stats.maxSpeed/2 + this.stats.maxSpeed/2), 0];
 
   this.health = this.stats.maxHealth;
   this.fireRate = this.stats.maxFireRate;
@@ -96,7 +96,8 @@ eShip.prototype.dodge = function(event){
 
   if (Math.abs(event.pos[0]-that.pos[0]) < 100){
     if (Math.abs(event.pos[1]-that.pos[1]) < 100){
-      that.velocity = [-(Math.random()*that.stats.maxSpeed),-(Math.random()*that.stats.maxSpeed)];
+      if (that.rect.center > $g.game.screenSize[1]/2) that.velocity = [-(Math.random()*that.stats.maxSpeed/2 + that.stats.maxSpeed/2),-(Math.random()*that.stats.maxSpeed)];
+      else that.velocity = [-(Math.random()*that.stats.maxSpeed/2 + that.stats.maxSpeed/2), (Math.random()*that.stats.maxSpeed)];
       setTimeout(function(){
         that.velocity = [-(Math.random()*that.stats.maxSpeed), 0];
       }, 100);

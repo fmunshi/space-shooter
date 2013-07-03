@@ -13,7 +13,7 @@ var ufo = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
 
   this.stats = {
-    maxSpeed    :   20,
+    maxSpeed    :   10,
     maxHealth   :   10 + $g.level.number*10,
     maxFireRate :   Math.abs(Math.random()*1000 + 500 - $g.level.number*100),
     accuracy    :   0,

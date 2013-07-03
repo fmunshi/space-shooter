@@ -13,17 +13,17 @@ var Powerup = exports.Powerup = function (text){
 };
 
 Powerup.prototype.render = function(display, msDuration){
-  this.surface.fill("#20102F");
-  this.surface.blit(this.text, [0, 0]);
-  gamejs.draw.rect(this.surface, '#000000', new gamejs.Rect([85, 2], [100, 12]));
-  gamejs.draw.rect(this.surface, '#FFFFFF', new gamejs.Rect([87, 4], [96 / 5, 8]));
+  // this.surface.fill("#20102F");
+  // this.surface.blit(this.text, [0, 0]);
+  // gamejs.draw.rect(this.surface, '#000000', new gamejs.Rect([85, 2], [100, 12]));
+  // gamejs.draw.rect(this.surface, '#FFFFFF', new gamejs.Rect([87, 4], [96 / 5, 8]));
 
-  this.surface.setAlpha(0.5);
+  // this.surface.setAlpha(0.5);
 
-  display.blit(this.surface);
+  // display.blit(this.surface);
 
-  this.time += msDuration;
-  if (this.time > 10000) $g.powerup = false;
+  // this.time += msDuration;
+  // if (this.time > 10000) $g.powerup = false;
 
   // display.blit(this.font.render(this.text, '#'+this.color), [$g.game.screenSize[0]/2-100, 100]);
   // this.color = (parseInt(this.color) - 10101);

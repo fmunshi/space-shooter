@@ -18,7 +18,7 @@ var Star = exports.Star =  function() {
   
   this.velocity = [this.speedX, this.speedY];
   this.rect = new gamejs.Rect([this.size, this.size]);
-  this.pos = [$g.game.screenSize[0]*Math.random(), Math.random()*$g.game.screenSize[1]];
+  this.pos = [$g.game.screenSize[0]*Math.random() + $g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
   this.rect.center = this.pos;
 
   return this;
@@ -34,7 +34,7 @@ Star.prototype.update = function (msDuration){
 Star.prototype.checkbounds = function(){
   	var that = this;
     var pos = this.rect.center;
-    if ( (pos[0] < - 150) || (pos[0] > $g.game.screenSize[0] + 100) || (pos[1] < -100) || (pos[1] > $g.game.screenSize[1] + 100) )  { 
+    if ( (pos[0] < - 150) || (pos[1] < -100) || (pos[1] > $g.game.screenSize[1] + 100) )  { 
       this.rect.center = this.pos;
     }
 };

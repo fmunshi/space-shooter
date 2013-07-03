@@ -13,7 +13,7 @@ var Raider = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
 
   this.stats = {
-    maxSpeed    :   15,
+    maxSpeed    :   5,
     maxHealth   :   300 + $g.level.number*10,
     maxFireRate :   Math.abs(Math.random()*1000 + 500 - $g.level.number*20),
     accuracy    :   0,

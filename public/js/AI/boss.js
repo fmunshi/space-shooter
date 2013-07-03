@@ -13,7 +13,7 @@ var Boss = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
 
   this.stats = {
-    maxSpeed    :   1,
+    maxSpeed    :   2,
     maxHealth   :   2000 + $g.level.number*20,
     maxFireRate :   Math.random()*1000 + 100 - $g.level.number*10,
     accuracy    :   0,

@@ -13,7 +13,7 @@ var Explorer = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
 
   this.stats = {
-    maxSpeed    :   1,
+    maxSpeed    :   2,
     maxHealth   :   200 + $g.level.number*10, 
     maxFireRate :   Math.abs(Math.random()*3000 + 500 - $g.level.number*100),
     accuracy    :   0,

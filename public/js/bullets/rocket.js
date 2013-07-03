@@ -21,7 +21,7 @@ var Rocket = function(rect, ship, pos) {
   this.rect.width = this.image.rect.width;
   this.rect.height = this.image.rect.height;
 
-  this.damage = 100*this.ship.stats.damage/100;
+  this.damage = 75*this.ship.stats.damage/100;
 
   return this;
 };

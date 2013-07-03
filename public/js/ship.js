@@ -216,7 +216,7 @@ Ship.prototype.loadRocket = function (){
   var loadRocket = setTimeout(function(){ 
       that.shooting = false;  
       clearTimeout(loadRocket);
-  }, 500);
+  }, 1000);
 };
 
 Ship.prototype.shootLasers = function (msDuration){
@@ -331,11 +331,11 @@ Ship.prototype.addExp = function(amount){
     console.log('LEVELED UP TO: '+this.level);
     
     this.stats.maxHealth += 10;
-    this.stats.maxHeat += 10;
+    this.stats.maxHeat += 20;
 
-    if (this.level%2 === 0)   this.stats.defense += 10;
+    if (this.level%2 === 0)   this.stats.defense += 5;
 
-    if (this.level%3 === 0)   this.stats.damage += 10;
+    if (this.level%3 === 0)   this.stats.damage += 5;
 
     if (this.level%5 === 0 && this.stats.luck < 0.2)   this.stats.luck += 0.01;
 
