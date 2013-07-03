@@ -48,7 +48,7 @@ exports.images = function(){
 exports.map = function(){
 
 
-  gamejs.preload(["./images/Player/ship.png"]);
+    gamejs.preload(["./images/Player/ship.png"]);
     gamejs.preload(["./images/Player/rightShip.png"]);
     gamejs.preload(["./images/Player/leftShip.png"]);
 
@@ -78,7 +78,7 @@ exports.map = function(){
     gamejs.preload(["./images/Powerups/invincible.png"]);
     gamejs.preload(["./images/Powerups/kill.png"]);
     gamejs.preload(["./images/Powerups/spray.png"]);
-    
+
     $g.display = gamejs.display.setMode($g.game.screenSize);
     $g.ship =  new $ship([80, 80]);
     setTimeout(createEnemies(), 1000);
