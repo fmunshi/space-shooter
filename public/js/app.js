@@ -8,7 +8,7 @@ var $http = require("gamejs/http");
 gamejs.preload(["./images/Player/ship.png"]);
 gamejs.preload($g.images);
 
-setTimeout(gamejs.ready(main), 500);
+setTimeout(gamejs.ready(main), 3000);
     
     function main() {
         gamejs.preload(["./images/Player/ship.png"]);
