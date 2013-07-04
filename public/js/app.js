@@ -5,16 +5,17 @@ var $map = require("map");
 var $setup = require("setup");
 var $http = require("gamejs/http");
 
-
+gamejs.preload("./images/Player/ship.png");
 gamejs.preload($g.images);
-setTimeout(function(){
-    gamejs.ready(function() {
-            $setup.map();
-            var display = $g.display;
-            var ship = $g.ship;
-        
 
-
+setTimeout(gamejs.ready(main), 500);
+    
+    function main() {
+        gamejs.preload("./images/Player/ship.png");
+        $setup.map();
+        var display = $g.display;
+        var ship = $g.ship;
+    
         gamejs.onEvent(function(event) {
             if (!($g.game.isPaused|| $g.game.isEnded)){
                 ship.handle(event);
@@ -68,7 +69,4 @@ setTimeout(function(){
 
 
        });
-
-    });
-
-}, 500);
+    };
