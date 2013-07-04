@@ -5,13 +5,13 @@ var $map = require("map");
 var $setup = require("setup");
 var $http = require("gamejs/http");
 
-gamejs.preload("./images/Player/ship.png");
+gamejs.preload(["./images/Player/ship.png"]);
 gamejs.preload($g.images);
 
 setTimeout(gamejs.ready(main), 500);
     
     function main() {
-        gamejs.preload("./images/Player/ship.png");
+        gamejs.preload(["./images/Player/ship.png"]);
         $setup.map();
         var display = $g.display;
         var ship = $g.ship;
