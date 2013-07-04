@@ -6,8 +6,7 @@ var $setup = require("setup");
 var $http = require("gamejs/http");
 
 
-// Preload all images
-$setup.images();
+gamejs.preload($g.images);
 
 gamejs.ready(function() {
 

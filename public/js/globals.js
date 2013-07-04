@@ -55,3 +55,33 @@ exports.fonts = {
     small: new gamejs.font.Font("24px Aller"),
     mini: new gamejs.font.Font("14px Aller")
 };
+
+
+exports.images = [
+
+    "./images/Player/ship.png",
+    "./images/Player/rightShip.png",
+    "./images/Player/leftShip.png",
+
+    "./images/Player/rocket.png",
+    "./images/Player/laser.png",
+
+    "./images/Map/star.png",
+    "./images/Map/meteor.png",
+    "./images/Map/meteorSmall.png",
+
+    "./images/Enemies/laser.png",
+
+    "./images/Enemies/boss.png",
+    "./images/Enemies/ufo.png",
+    "./images/Enemies/explorer.png",
+    "./images/Enemies/darkExplorer.png",
+    "./images/Enemies/heavyRaider.png",
+    "./images/Enemies/raider.png",
+
+    "./images/Powerups/damage.png",
+    "./images/Powerups/health.png",
+    "./images/Powerups/invincible.png",
+    "./images/Powerups/kill.png",
+    "./images/Powerups/spray.png"
+];
