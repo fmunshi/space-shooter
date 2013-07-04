@@ -70,6 +70,7 @@ var createEnemies = function(){
       setTimeout(function(){
         var boss = new $boss([200,200]);
         $g.eShips.add(boss);
+        $g.time = NaN;
       }, $g.level.time-10000);
     }
 

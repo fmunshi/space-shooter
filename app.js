@@ -19,9 +19,9 @@ var cronJob = require('cron').CronJob;
 new cronJob('0,30 * * * *', function(){
   http.get(
     {
-        host: 'farhan-space-shooter.herokuapp.com',
-        port: 80
-    }, 
+      host: 'farhan-space-shooter.herokuapp.com',
+      port: 80
+    },
     function(response) {
       response.on('end', function () {
       console.log('Site reactivated');
@@ -33,6 +33,7 @@ new cronJob('0,30 * * * *', function(){
 
 
 var port = process.env.PORT || 1337;
+
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
