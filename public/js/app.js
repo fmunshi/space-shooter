@@ -5,72 +5,69 @@ var $map = require("map");
 var $setup = require("setup");
 var $http = require("gamejs/http");
 
-gamejs.preload(["./images/Player/ship.png"]);
 gamejs.preload($g.images);
-
 gamejs.ready(main);
 
 function main() {
-setTimeout(
-    function (){
-        gamejs.preload(["./images/Player/ship.png"]);
-        $setup.map();
-        var display = $g.display;
-        var ship = $g.ship;
-    
-        gamejs.onEvent(function(event) {
-            if (!($g.game.isPaused|| $g.game.isEnded)){
-                ship.handle(event);
-                $g.eShips.forEach(function(eShip){
-                    eShip.handle(event);
-                });            
-            }
-
-            // IF event is a key down 
-            if (event.type === 1){
-                // 80 === "p" for pause
-                if (event.key === 80) $g.game.isPaused = true;
-                if (event.key !== 80) $g.game.isPaused = false;            
-            }
-
-        });
-
-        gamejs.onTick(function(msDuration) {
-
+    setTimeout(
+        function (){
+            $setup.map();
+            var display = $g.display;
+            var ship = $g.ship;
         
-            if (!($g.game.isPaused|| $g.game.isEnded)){
+            gamejs.onEvent(function(event) {
+                if (!($g.game.isPaused|| $g.game.isEnded)){
+                    ship.handle(event);
+                    $g.eShips.forEach(function(eShip){
+                        eShip.handle(event);
+                    });            
+                }
 
-                $g.time += msDuration;
-                $g.totalTime += msDuration;
-                if ($g.time > $g.level.time) $setup.increaseLevel();
+                // IF event is a key down 
+                if (event.type === 1){
+                    // 80 === "p" for pause
+                    if (event.key === 80) $g.game.isPaused = true;
+                    if (event.key !== 80) $g.game.isPaused = false;            
+                }
 
-                display.fill("#20102F");
+            });
 
-                if ($g.powerup) $g.powerup.render(display, msDuration);
-                
-                ship.update(msDuration);
-                ship.draw(display);
+            gamejs.onTick(function(msDuration) {
 
-                $g.projectiles.update(msDuration);
-                $g.projectiles.draw(display);
+            
+                if (!($g.game.isPaused|| $g.game.isEnded)){
 
-                $g.eShips.update(msDuration);
-                $g.eShips.draw(display);
+                    $g.time += msDuration;
+                    $g.totalTime += msDuration;
+                    if ($g.time > $g.level.time) $setup.increaseLevel();
 
-                $g.powerups.update(msDuration);
-                $g.powerups.draw(display);
+                    display.fill("#20102F");
 
-                $map.drawStars(display, msDuration);
-                $map.drawHealth(display);
-            }
+                    if ($g.powerup) $g.powerup.render(display, msDuration);
+                    
+                    ship.update(msDuration);
+                    ship.draw(display);
 
-            else if ($g.game.isEnded){
-                display.fill("#20102F");
-                $map.drawScore(display);
-            }
+                    $g.projectiles.update(msDuration);
+                    $g.projectiles.draw(display);
+
+                    $g.eShips.update(msDuration);
+                    $g.eShips.draw(display);
+
+                    $g.powerups.update(msDuration);
+                    $g.powerups.draw(display);
+
+                    $map.drawStars(display, msDuration);
+                    $map.drawHealth(display);
+                }
+
+                else if ($g.game.isEnded){
+                    display.fill("#20102F");
+                    $map.drawScore(display);
+                }
 
 
-       });
-    },
-1000);
+           });
+        }, 
+    1000);
 }
