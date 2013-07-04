@@ -10,10 +10,13 @@ gamejs.preload($g.images);
 
 gamejs.ready(function() {
 
-    $setup.map();
-    
-    var display = $g.display;
-    var ship = $g.ship;
+
+    setTimeout(function(){
+        $setup.map();
+        var display = $g.display;
+        var ship = $g.ship;
+    }, 500);
+
 
     gamejs.onEvent(function(event) {
         if (!($g.game.isPaused|| $g.game.isEnded)){
