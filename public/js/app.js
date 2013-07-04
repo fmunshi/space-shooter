@@ -8,9 +8,11 @@ var $http = require("gamejs/http");
 gamejs.preload(["./images/Player/ship.png"]);
 gamejs.preload($g.images);
 
-setTimeout(gamejs.ready(main), 3000);
-    
-    function main() {
+gamejs.ready(main);
+
+function main() {
+setTimeout(
+    function (){
         gamejs.preload(["./images/Player/ship.png"]);
         $setup.map();
         var display = $g.display;
@@ -69,4 +71,6 @@ setTimeout(gamejs.ready(main), 3000);
 
 
        });
-    };
+    },
+1000);
+}
