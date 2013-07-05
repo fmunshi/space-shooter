@@ -16,7 +16,7 @@ exports.map = function(){
   
     $g.display = gamejs.display.setMode($g.game.screenSize);
     $g.ship =  new $ship([80, 80]);
-    setTimeout(createEnemies(), 1000);
+    setTimeout(createEnemies, 1000);
     
 };
 
@@ -24,7 +24,6 @@ exports.map = function(){
 exports.increaseLevel = function(){
 
   $g.time = 0;
-  $g.stars = [];
   $g.projectiles = new gamejs.sprite.Group();
   $g.eShips = new gamejs.sprite.Group();
   $g.powerups = new gamejs.sprite.Group();
@@ -55,6 +54,7 @@ var createEnemies = function(){
   setTimeout(function(){
     for (var i = 0; i < 20; i++){
       var star = new $map.Star();
+      $g.stars.shift();
       $g.stars.push(star);
     }
     for (var i = 0; i < $g.level.maxMeteors; i++){

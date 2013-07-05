@@ -44,15 +44,12 @@ Rocket.prototype.kill = function(){
     if (eShip.dead < 0) $g.ship.addExp(eShip.exp);
   });
 
-  this.ship.bullets.remove(this);
-  this.velocity = [0,0];
-
+  $laser.prototype.kill.apply(this);
 };
 
 Rocket.prototype.update = function (msDuration){
   this.checkbounds();
-  var velocity = $g.calcVelocity(msDuration, this.velocity);
-  this.rect.moveIp(velocity);
+  this.rect.moveIp($g.calcVelocity(msDuration, this.velocity));
   this.collide();
   this.rect.width = this.image.rect.width;
   this.rect.height = this.image.rect.height;
