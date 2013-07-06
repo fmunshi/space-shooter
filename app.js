@@ -19,7 +19,7 @@ var cronJob = require('cron').CronJob;
 new cronJob('0,30 * * * *', function(){
   http.get(
     {
-      host: 'farhan-space-shooter.herokuapp.com',
+      host: 'spaceshooter.herokuapp.com',
       port: 80
     },
     function(response) {
