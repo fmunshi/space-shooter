@@ -4,6 +4,7 @@ var $e = require("gamejs/event");
 var $m = require("gamejs/utils/math");
 var $rocket = require("bullets/rocket").Rocket;
 var $laser = require("bullets/laser").Laser;
+var $http = require("gamejs/http");
 
 var Ship = function(rect) {
   // call superconstructor
@@ -24,18 +25,17 @@ var Ship = function(rect) {
   this.rotation = 0;
 
   this.stats = {
-    fireRate    :   100,
-    maxSpeed    :   15,
-    weapons     :   ["rocket", "laser"],
-    maxHealth   :   1000,
-    maxHeat     :   1000,
-    damage      :   100,
-    defense     :   100,
-    luck        :   0.1,
-    exp         :   100
+    fireRate    :   $g.user.fireRate,
+    maxSpeed    :   $g.user.maxSpeed,
+    maxHealth   :   $g.user.maxHealth,
+    maxHeat     :   $g.user.maxHeat,
+    damage      :   $g.user.damage,
+    defense     :   $g.user.defense,
+    luck        :   $g.user.luck,
+    exp         :   $g.user.exp,
   };
 
-  this.level = 1;
+  this.level = $g.user.level;
   this.exp = 0;
 
   // Stat related stuff
@@ -239,9 +239,9 @@ Ship.prototype.shootLasers = function (msDuration){
 Ship.prototype.switchWeapon = function(){
   // Cycle through weapons array when user hits SHIFT
 
-  var i = this.stats.weapons.indexOf(this.weapon);
-  if (this.stats.weapons[i+1] === undefined) this.weapon = this.stats.weapons[0];
-  else this.weapon = this.stats.weapons[i+1];
+  // var i = this.stats.weapons.indexOf(this.weapon);
+  // if (this.stats.weapons[i+1] === undefined) this.weapon = this.stats.weapons[0];
+  // else this.weapon = this.stats.weapons[i+1];
 };
 
 Ship.prototype.changeDirection = function(event){
@@ -339,7 +339,13 @@ Ship.prototype.addExp = function(amount){
 
     if (this.level%5 === 0 && this.stats.luck < 0.2)   this.stats.luck += 0.01;
 
-    console.warn(this.stats)
+    console.warn(this.stats);
+    for (var stat in this.stats){
+      window.user[stat] = this.stats[stat];
+    }
+    window.user.level = this.level;
+    window.user = $http.save('save', window.user);
+    console.log(window.user);
   }
   $g.score += amount;
 }

@@ -9,6 +9,8 @@ exports.game = {
     isEnded       :   false
 };
 
+exports.user = window.user;
+
 exports.score = 0;
 
 exports.level = {
