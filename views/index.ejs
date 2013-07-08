@@ -17,8 +17,6 @@
 <body>
     <script>
         $(document).ready(function(){
-            user = {};
-            userSet = false;
             require.setModuleRoot("js/");
 
             $("#gjs-canvas").mousedown(function(event){
@@ -26,39 +24,27 @@
             });
 
             $('#start').click(function(event){
-                if (userSet){
-                    $('.container').fadeOut(100, function(){
-                        $('#gjs-canvas').fadeIn(1000);
+                var username = prompt('Enter your username');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/login",
+                    data: {
+                        "name"      : username
+                    },
+                    error: function(data, status, xhr){
+                        alert('Something went wrong ... try again');
+                    }
+                    }).success(function(data, status, xhr){
+                        console.log(data);
+                        user = data;
+                        window.user = user;
+                    $('.container').fadeOut(50, function(){
+                        $('#gjs-canvas').fadeIn(100);
                         require.run("app");
                     });
-                }
-            });
+                });
 
-            $('#login').submit(function(event){
-                event.preventDefault();
-                var username = $('#username').val();
-                var password = $('#password').val();
-                var postData = JSON.stringify({
-                    "name"      : username,
-                    "password"  : password
-                });
-                console.log(JSON.parse(postData));
-                $.ajax({
-                type: "POST",
-                url: "/login",
-                data: {
-                    "name"      : username,
-                    "password"  : password
-                },
-                error: function(data, status, xhr){
-                    alert('Something went wrong ... try again');
-                }
-                }).success(function(data, status, xhr){
-                    console.log(data);
-                    user = data;
-                    window.user = user;
-                    userSet = true;
-                });
             });
 
         });
@@ -74,12 +60,7 @@
         <center class = 'play' >
             <h1><a href="#" id = 'start'>&nbsp; Play! &nbsp;»</a></h1>
         </center>
-        
-        <form id = 'login'>
-            <input type = 'text' name = 'username' id = 'username'>
-            <input type = 'password' name = 'password' id = 'password'>
-            <input type = 'submit' class = 'btn'>
-        </form>
+
 
         <div class="row-fluid">
             <div class="span6">
