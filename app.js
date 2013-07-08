@@ -67,8 +67,8 @@ app.post("/login", function(req, res){
   var found = false;
 
     var existingUser = User.findOne({ name: user.name }, function(err, u){
-      if (err) throw err;
-      else if (u.name === user.name){
+      if (err) console.log(err);
+      else if (u != null){
         console.log('User Exists');
         console.log(u);
         res.send(u);
