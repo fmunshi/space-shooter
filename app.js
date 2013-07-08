@@ -44,8 +44,8 @@ var UserSchema = new mongoose.Schema({
 });
 
 var User = db.model('User', UserSchema);
-// user = User.find();
-// user.remove();
+user = User.find();
+user.remove();
 
 
 app.get("/", function(req, res){
@@ -84,7 +84,7 @@ app.post("/login", function(req, res){
           damage      :   100,
           defense     :   100,
           luck        :   0.1,
-          exp         :   1,
+          exp         :   100,
           level       :   1
         });
 
