@@ -28,7 +28,6 @@ var UserSchema = new mongoose.Schema({
     unique    : true,
     lowercase : true
   },
-  password    :   String,
 
   fireRate    :   Number,
   maxSpeed    :   Number,
@@ -44,22 +43,13 @@ var UserSchema = new mongoose.Schema({
 });
 
 var User = db.model('User', UserSchema);
-user = User.find();
-user.remove();
+// user = User.find();
+// user.remove();
 
 
 app.get("/", function(req, res){
 	res.render("index.ejs");
 });
-
-app.get("/:name/password", function(req, res){
-  var name = req.params.name;
-  User.find({ name: user.name }, function (err, user) {
-    console.log(user);
-  });
-});
-
-
 
 app.post("/login", function(req, res){
   console.warn(req.body);
@@ -76,7 +66,6 @@ app.post("/login", function(req, res){
       else {
         var newUser = new User({
           name        :   user.name,
-          password    :   user.password,
           fireRate    :   100,
           maxSpeed    :   15,
           maxHealth   :   1000,

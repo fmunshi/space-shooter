@@ -21,6 +21,8 @@ var Boss = function(rect) {
     damage      :   100 + $g.level.number*10
   };
 
+  this.pos = [$g.game.screenSize[0]/2, 0];
+
   this.exp = 100;
 
   this.health = this.stats.maxHealth;
@@ -42,20 +44,7 @@ Boss.prototype.kill = function (keepAlive) {
 
 
 Boss.prototype.checkbounds = function(){
-
-    if (this.stats.maxSpeed > 0){
-      if (this.pos[0] < 100) {
-        this.stats.maxSpeed *= -1;
-        this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
-      }      
-    }
-    else{ 
-      if (this.pos[0] > $g.game.screenSize[0]) {
-        this.stats.maxSpeed*= -1;
-        this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
-      }
-    }
-
+  $eShip.prototype.checkbounds.apply(this);
 };
 
 
