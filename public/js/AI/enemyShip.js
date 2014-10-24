@@ -14,12 +14,6 @@ var eShip = function(rect) {
   this.image = gamejs.transform.rotate(this.originalImage, 90);
   
   // [x,y]
-  this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
-
-  this.rect = new gamejs.Rect(rect);
-  this.rect.center = this.pos;
-
-
   this.stats = {
     maxSpeed    :   15,
     maxHealth   :   200 + $g.level.number*5,
@@ -29,9 +23,31 @@ var eShip = function(rect) {
     damage      :   10 + $g.level.number*1
   };
 
-  this.exp = 10;
 
   this.velocity = [-(Math.random()*this.stats.maxSpeed/5 + 1), 0];
+  
+  this.setPosition = function(){
+    var rand = Math.random();
+    if (rand < 0.3) {
+      this.pos = [Math.random()*$g.game.screenSize[0], -100];
+      this.velocity = [Math.random(), (Math.random()*this.stats.maxSpeed)];
+    }
+    else if (rand < 0.6) {
+      this.pos = [Math.random()*$g.game.screenSize[0], $g.game.screenSize[1] + 100];
+      this.velocity = [Math.random(), (Math.random()*this.stats.maxSpeed)];
+    }
+    else if (rand < 1.0){
+      this.pos = [$g.game.screenSize[0], Math.random()*$g.game.screenSize[1]];
+      this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
+    }
+    this.rect.center = this.pos;
+  }
+  this.setPosition();
+    
+  this.rect = new gamejs.Rect(rect);
+  this.rect.center = this.pos;
+
+  this.exp = 10;
 
   this.health = this.stats.maxHealth;
   this.fireRate = this.stats.maxFireRate;
@@ -93,7 +109,6 @@ eShip.prototype.handle = function(event){
 
 eShip.prototype.dodge = function(event){
   var that = this;
-
   if (Math.abs(event.pos[0]-that.pos[0]) < 100){
     if (Math.abs(event.pos[1]-that.pos[1]) < 100){
       if (that.rect.center > $g.game.screenSize[1]/2) that.velocity = [-(Math.random()*that.stats.maxSpeed/2 + that.stats.maxSpeed/2),-(Math.random()*that.stats.maxSpeed)];
@@ -107,34 +122,38 @@ eShip.prototype.dodge = function(event){
 
 
 eShip.prototype.checkbounds = function(){
-    var pos = this.pos;
-    // if (this.stats.maxSpeed > 0){
-    //   if (this.pos[0] < 100) {
-    //     this.stats.maxSpeed *= -1;
-    //     this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
-    //   }      
-    // }
-    // else{ 
-    //   if (this.pos[0] > $g.game.screenSize[0]) {
-    //     this.stats.maxSpeed*= -1;
-    //     this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
-    //   }
-    // }
 
-    if ( (pos[0] < - 150) || (pos[0] > $g.game.screenSize[0] + 100) || (pos[1] < -100) || (pos[1] > $g.game.screenSize[1] + 100) )  { 
-      this.kill(true);
-    }
+    if (this.pos[1] < -100)
+      this.velocity = [Math.random(), (Math.random()*this.stats.maxSpeed)];
+
+    else if (this.pos[1] > $g.game.screenSize[1]) 
+      this.velocity = [Math.random(), -(Math.random()*this.stats.maxSpeed)];
+
+    if (this.pos[0] > $g.game.screenSize[0])
+      this.velocity = [-(Math.random()*this.stats.maxSpeed), Math.random()];
+
+    else if (this.pos[0] < -150)
+      this.velocity = [(Math.random()*this.stats.maxSpeed), Math.random()];
 
 };
 
 eShip.prototype.kill = function (keepAlive) {
   var powerup = new $powerup(this.pos);
-
   this.dead = 3000;
-  this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
+
+  var rand = Math.random();
+  if (rand < 0.3) {
+    this.pos = [Math.random()*$g.game.screenSize[0], -100];
+  }
+  else if (rand < 0.6) {
+    this.pos = [Math.random()*$g.game.screenSize[0], $g.game.screenSize[1] + 100];
+  }
+  else if (rand < 1.0){
+    this.pos = [$g.game.screenSize[0]+100, Math.random()*$g.game.screenSize[1]];
+  }
   this.rect.center = this.pos;
   if (!keepAlive) this.health = this.stats.maxHealth;
-  this.velocity = [0,0];
+  
 }
 
 //ANGLE STUFF
@@ -179,26 +198,25 @@ eShip.prototype.collide = function (){
   var shipCollide = gamejs.sprite.spriteCollide($g.ship, this.bullets, true);
   if (shipCollide.length > 0){
     shipCollide.forEach(function(bullet){
-      if (isNaN(bullet.damage))  alert(bullet.damage);
-      else {
         $g.ship.damage(bullet.damage);
-      }
     });
-  } 
+  }
 }
 
 
 eShip.prototype.damage = function(amount){
-  // Reduce health by "amount" also kill user if health below 0
   this.health -= amount;
   if (this.health < 0) this.kill();
-  // console.warn(amount);
-
 }
 
 eShip.prototype.setVelocity = function(){
-  this.velocity = [-(Math.random()*this.stats.maxSpeed), 0];
-  console.log(this.velocity);
+  var pos = this.pos;
+  if ((pos[1] > $g.game.screenSize[1] + 100))  {
+    this.velocity = [Math.random(), -(Math.random()*this.stats.maxSpeed)];
+  }
+  else {
+    this.velocity = [-Math.random(), (Math.random()*this.stats.maxSpeed)];
+  }
 }
 
 exports.eShip = eShip;
