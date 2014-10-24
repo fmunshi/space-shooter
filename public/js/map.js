@@ -82,8 +82,8 @@ var drawHealth = exports.drawHealth = function(display){
   gamejs.draw.rect(display, "#FF0A00", new gamejs.Rect([$g.ship.pos[0]-50, $g.ship.pos[1]-40], [$g.ship.heat / $g.ship.stats.maxHeat * $g.ship.originalImage.getSize()[0], 2]), 0);
 
   $g.eShips.forEach(function(eShip){
-      gamejs.draw.rect(display, "#00AA00", new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-50], [eShip.health / eShip.stats.maxHealth * eShip.originalImage.getSize()[0], 2]), 0);
-      gamejs.draw.rect(display, "#FF0A00", new gamejs.Rect([eShip.pos[0]-50, eShip.pos[1]-40], [eShip.heat / eShip.stats.maxHeat * eShip.originalImage.getSize()[0], 2]), 0);
+      gamejs.draw.rect(display, "#00AA00", new gamejs.Rect([eShip.pos[0]-40, eShip.pos[1]-40], [eShip.health / eShip.stats.maxHealth * eShip.originalImage.getSize()[0], 2]), 0);
+      gamejs.draw.rect(display, "#FF0A00", new gamejs.Rect([eShip.pos[0]-40, eShip.pos[1]-30], [eShip.heat / eShip.stats.maxHeat * eShip.originalImage.getSize()[0], 2]), 0);
   });
 
 }

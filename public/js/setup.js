@@ -75,7 +75,7 @@ var createEnemies = function(){
     }
 
       for (var i = 0; i < $g.level.maxUFOs; i++){
-        var ufo = new $ufo([20,20]);
+        var ufo = new $ufo([25,25]);
         $g.eShips.add(ufo);
     }
 
@@ -85,7 +85,7 @@ var createEnemies = function(){
     }
 
       for (var i = 0; i < $g.level.maxExplorers; i++){
-        var explorer = new $explorer([80,80]);
+        var explorer = new $explorer([70,70]);
         $g.eShips.add(explorer);
     }
   }, 1000);

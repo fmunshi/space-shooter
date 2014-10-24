@@ -1,6 +1,5 @@
 var gamejs = require("gamejs");
 var $g = require("globals");
-var $powerText = require("animations/powerup").Powerup;
 
 //General Powerup class
 
@@ -11,12 +10,12 @@ var Powerup =  function(pos) {
   if (Math.random() < $g.ship.stats.luck) create = true;
   // create = true; // hack
 
-  var types = ["damage", "health", "invincible", "kill", "spray"];
+  var types = ["health", "invincible", "kill", "spray"];
 
   this.index = Math.floor(Math.random()*types.length);
   // this.index = 3; // hack
   this.type = types[this.index]
-  this.size = [50,50];
+  this.size = [40,40];
 
   this.image = gamejs.image.load("./images/Powerups/"+this.type+".png");
 
@@ -49,24 +48,21 @@ Powerup.prototype.update = function(msDuration){
 
 Powerup.prototype.kill = function (){
   switch (this.index) {
-    case 0:
-      $g.powerup = new $powerText('DOUBLE DAMAGE');
-      $g.ship.stats.damage *= 2;
-      setTimeout(function(){
-        $g.ship.stats.damage *= 0.5;
-        console.log($g.ship.stats.damage);
-      }, 10000);
-      // Damage Double
-      break;
+    // case 0:
+    //   $g.ship.stats.damage *= 2;
+    //   setTimeout(function(){
+    //     $g.ship.stats.damage *= 0.5;
+    //     console.log($g.ship.stats.damage);
+    //   }, 10000);
+    //   // Damage Double
+    //   break;
 
-    case 1:
-      $g.powerup = new $powerText('DOUBLE DAMAGE');
+    case 0:
       $g.ship.health = $g.ship.stats.maxHealth;
       // Health refill
       break;
 
-    case 2:
-      $g.powerup = new $powerText('DOUBLE DAMAGE');
+    case 1:
       $g.ship.invincible = true;
       setTimeout(function(){
         $g.ship.invincible = false;
@@ -74,9 +70,8 @@ Powerup.prototype.kill = function (){
       // invincible
       break;
 
-    case 3:
+    case 2:
       // kill
-      $g.powerup = new $powerText('DOUBLE DAMAGE');
       $g.eShips.forEach(function(ship){
         ship.kill();
         $g.ship.addExp(ship.exp);
@@ -88,9 +83,8 @@ Powerup.prototype.kill = function (){
       });
 
       break;
-    case 4:
+    case 3:
     // spray
-      $g.powerup = new $powerText('DOUBLE DAMAGE');
       $g.ship.spray = true;
       setTimeout(function(){
         $g.ship.spray = false;

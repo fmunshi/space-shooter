@@ -77,11 +77,9 @@ exports.images = [
     "./images/Enemies/boss.png",
     "./images/Enemies/ufo.png",
     "./images/Enemies/explorer.png",
-    "./images/Enemies/darkExplorer.png",
-    "./images/Enemies/heavyRaider.png",
     "./images/Enemies/raider.png",
 
-    "./images/Powerups/damage.png",
+    // "./images/Powerups/damage.png",
     "./images/Powerups/health.png",
     "./images/Powerups/invincible.png",
     "./images/Powerups/kill.png",

@@ -24,25 +24,38 @@
             });
 
             $('#start').click(function(event){
-                var username = prompt('Enter your username');
+                // var username = prompt('Enter your username');
 
-                $.ajax({
-                    type: "POST",
-                    url: "/login",
-                    data: {
-                        "name"      : username
-                    },
-                    error: function(data, status, xhr){
-                        alert('Something went wrong ... try again');
-                    }
-                    }).success(function(data, status, xhr){
-                        console.log(data);
-                        user = data;
-                        window.user = user;
-                    $('.container').fadeOut(50, function(){
-                        $('#gjs-canvas').fadeIn(100);
-                        require.run("app");
-                    });
+                // $.ajax({
+                //     type: "POST",
+                //     url: "/login",
+                //     data: {
+                //         "name"      : username
+                //     },
+                //     error: function(data, status, xhr){
+                //         alert('Something went wrong ... try again');
+                //     }
+                //     }).success(function(data, status, xhr){
+                //         console.log(data);
+                //         user = data;
+                //         window.user = user;
+                // });
+                window.user = {
+                  name        :   "Player",
+                  fireRate    :   100,
+                  maxSpeed    :   15,
+                  maxHealth   :   1000,
+                  maxHeat     :   1000,
+                  damage      :   100,
+                  defense     :   100,
+                  luck        :   0.1,
+                  exp         :   100,
+                  level       :   1
+                };
+
+                $('.container').fadeOut(50, function(){
+                    $('#gjs-canvas').fadeIn(100);
+                    require.run("app");
                 });
 
             });
@@ -69,12 +82,6 @@
                 </h2>
                 <p>
                     <ul class = 'info'>
-                        <li>
-                            <img src="images/Powerups/damage.png">
-                            <td class = 'right'>
-                                Double damage
-                            </td>
-                        </li>
                         <li>
                             <img src="images/Powerups/health.png"> 
                             <td class = 'right'>

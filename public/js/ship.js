@@ -326,7 +326,7 @@ Ship.prototype.addExp = function(amount){
   if (this.exp > this.stats.exp){
     this.exp = this.exp - this.stats.exp;
     this.level += 1;
-    this.stats.exp += this.level*this.level;
+    this.stats.exp += this.level;
 
     console.log('LEVELED UP TO: '+this.level);
     
